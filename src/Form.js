@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Form = (props) => {
-    const { handleUserInputChange, userInput, handleFormSubmit } = props
+    const { handleLibraryInputChange, libraryInput, handleFormSubmit } = props
     return (
         <>
             <form action="submit">
@@ -10,8 +10,8 @@ const Form = (props) => {
                     <input
                         type="text"
                         id=""
-                        value={userInput}
-                        onChange={handleUserInputChange}
+                        value={libraryInput}
+                        onChange={handleLibraryInputChange}
                         placeholder="" />
                 </div>
 

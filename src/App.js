@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       libraryInput: '', // to register change of library selection
       autoComplete: [], // results from the prediction text
-      selectedLibrary: {}, // to grab value of library
+      selectedLibrary: {}, // to grab value of library // pop in here
       selectedRadius: '',
       coffeeShops: [],
       distanceBetween: '',
@@ -24,6 +24,7 @@ class App extends Component {
   }
 
   handleLibraryInputChange = (event) => {
+    // console.log(event);
     const libraryInput = event.target.value;
     console.log(libraryInput);
 
@@ -42,7 +43,7 @@ class App extends Component {
           },
         })
           .then((res) => {
-            console.log(res.data.results);
+            // console.log(res.data.results);
             this.setState({ autoComplete: [...res.data.results] })
           });
       }
@@ -52,7 +53,13 @@ class App extends Component {
 
 
   handleLibraryInputSelected = (event) => {
+    console.log(event.target.value);
     const selectedLibrary = event.target.value;
+
+    // grab name + store name in input field
+    // grab the L&L + store for the next API call 
+    // create toggle to close autocomplete box
+
     this.setState({
       selectedLibrary
     })
@@ -61,7 +68,7 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log('form submitted');
+    // console.log('form submitted');
 
 
   };
@@ -72,14 +79,18 @@ class App extends Component {
       <div className='App'>
         <Header />
         <Form
-          userInput={this.userInput}
-          handleUserInputChange={this.handleUserInputChange}
+          libraryInput={this.libraryInput}
+          handleLibraryInputChange={this.handleLibraryInputChange}
           handleFormSubmit={this.handleFormSubmit}
         />
         <div>
           <h2>Results</h2>
           {this.state.autoComplete.map(results => {
-            return <p key={results.id} onClick>{results.name}</p>
+            console.log(results)
+            
+            return <button key={results.id} onClick={this.handleLibraryInputSelected} value={results.name}>
+            {results.name}</button>
+            
           })}
         </div>
 
