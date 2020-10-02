@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import axios from 'axios';
 import './App.css';
+import Header from './Header';
+import Form from './Form';
+import Results from './Results';
+import Footer from './Footer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userInput: '', // to register change of library selection
+      selectedLibrary: '', // to grab value of library
+      selectedRadius: '',
+      coffeeShops: [],
+      distanceBetween: '',
+      selectedCoffeeShop: '',
+      
+      
+    }
+  }
+
+  handleUserInputChange = (event) => {
+    const userInput = event.target.value;
+    console.log(userInput);
+    this.setState({userInput}) 
+  }
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log('form submitted');
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Reading With Caffeine </h1>
+        <Form 
+          userInput={this.userInput}
+          handleUserInputChange={this.handleUserInputChange}
+          handleFormSubmit={this.handleFormSubmit}
+        />
+      </div>
+    )
+  }
 }
-
 export default App;
