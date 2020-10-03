@@ -15,6 +15,7 @@ class App extends Component {
       selectedLibrary: {}, // to grab value of library // pop in here
       selectedLibraryLatitude: '',
       selectedLibraryLongitude: '',
+      showSuggestions: true,
       selectedLibraryName: '',
       selectedRadius: '',
       coffeeShops: [],
@@ -22,12 +23,12 @@ class App extends Component {
       selectedCoffeeShop: '',
     };
   }
-  componentDidMount() {
-
-  }
 
   handleLibraryInputChange = (event) => {
     // console.log(event);
+    if (!this.state.showSuggestions) {
+      this.setState({showSuggestions: true})
+    }
     const libraryInput = event.target.value;
     console.log(libraryInput);
 
@@ -59,6 +60,7 @@ class App extends Component {
 
   handleLibraryInputSelected = (event) => {
     // console.log(this);
+    
     const selectedLibrary = event.target.value;
 
     const finalLibrary = this.state.autoComplete.filter(item => {
@@ -80,38 +82,56 @@ class App extends Component {
     this.setState({
       selectedLibraryLatitude,
       selectedLibraryLongitude,
-      selectedLibraryName,
+      selectedLibraryName}, 
+      () => {
+      this.setState({
+        libraryInput: selectedLibraryName,
+        showSuggestions: false,
+      });
     })
-  }
+  };
 
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     // console.log('form submitted');
-
-
   };
 
-
   render() {
+    const {
+      handleLibraryInputChange,
+      handleLibraryInputSelected,
+      handleFormSubmit,
+      state: {
+        libraryInput,
+        autoComplete,
+        showSuggestions,
+      }
+    } = this;
     return (
       <div className='App'>
         <Header />
         <Form
-          libraryInput={this.libraryInput}
-          handleLibraryInputChange={this.handleLibraryInputChange}
-          handleFormSubmit={this.handleFormSubmit}
+          libraryInput={libraryInput}
+          handleLibraryInputChange={handleLibraryInputChange}
+          handleFormSubmit={handleFormSubmit}
         />
-        <div>
-          <h2>Results</h2>
-          {this.state.autoComplete.map(results => {
-            // console.log(results)
-            // console.log(this)
-            return <button key={results.id} onClick={this.handleLibraryInputSelected} value={results.name} >
-              {results.name}</button>
+        <ul>
+          {showSuggestions === true && (
+            autoComplete.map(results => {
+              return <li className="autoCompleteResults">
+                <button
+                type="button"
+                key={results.id}
 
-          })}
-        </div>
+                onClick={handleLibraryInputSelected}
+                value={results.name}>
+                    {results.name} 
+                    </button>
+              </li>
+            })
+          )}
+        </ul>
 
         <Footer />
       </div>
