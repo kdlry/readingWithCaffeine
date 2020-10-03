@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import Header from './Header';
 import Form from './Form';
+import Form2 from './Form';
 import Results from './Results';
 import Footer from './Footer';
 
@@ -52,16 +53,6 @@ class App extends Component {
     });
   };
 
-  // selectAlLibrary = () => {
-  //   const increment = this.state.clicked + 1;
-  //   const selectedLibraryName = this.state.autoComplete.name;
-  //   this.setState({
-  //     clicked: increment,
-  //     selectedLibraryName: selectedLibraryName,
-  //   });
-  //   console.log(this.state.selectedLibraryName);
-  // };
-
   handleLibraryInputSelected = (event) => {
     // console.log(this);
     const selectedLibrary = event.target.value;
@@ -88,6 +79,7 @@ class App extends Component {
       selectedLibraryLongitude,
       selectedLibraryName,
       clicked: increment,
+      libraryInput: selectedLibraryName,
     });
   };
 
@@ -101,6 +93,14 @@ class App extends Component {
       <div className='App'>
         <Header />
         <Form
+          libraryInput={this.libraryInput}
+          handleLibraryInputChange={this.handleLibraryInputChange}
+          handleFormSubmit={this.handleFormSubmit}
+          // selectAlLibrary={this.selectedLibrary}
+          clicked={this.state.clicked}
+          selectedLibraryName={this.state.selectedLibraryName}
+        />
+        <Form2
           libraryInput={this.libraryInput}
           handleLibraryInputChange={this.handleLibraryInputChange}
           handleFormSubmit={this.handleFormSubmit}
