@@ -5,14 +5,15 @@ const Form = (props) => {
     handleLibraryInputChange,
     libraryInput,
     handleFormSubmit,
-    selectedRadius,
     handleRadiusSelected,
+    modeOfTransportation,
+    handleTransportationChange
   } = props;
   return (
     <>
       <form action='submit'>
         <div>
-          <label htmlFor='inputLocation'></label>
+          <label htmlFor='inputLocation'>Enter your library:</label>
           <input
             type='text'
             id='inputLocation'
@@ -23,6 +24,7 @@ const Form = (props) => {
         </div>
 
         <div>
+          <p>Select a radius:</p>
           <label htmlFor='radius5km'>5km</label>
           <input
             type='radio'
@@ -42,6 +44,15 @@ const Form = (props) => {
             onChange={handleRadiusSelected}
             placeholder=''
           />
+        </div>
+
+        <div>
+          <label htmlFor="modeOfTransportation">Choose a mode of transportation:</label>
+          <select id="modeOfTransportation" value={modeOfTransportation} onChange={handleTransportationChange}>
+            <option value="fastest">Drive</option>
+            <option value="pedestrian">Walk</option>
+            <option value="bicycle">Bike</option>
+          </select>
         </div>
 
         <div>
