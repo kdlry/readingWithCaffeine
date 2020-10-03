@@ -21,6 +21,7 @@ class App extends Component {
       coffeeShops: [],
       distanceBetween: '',
       selectedCoffeeShop: '',
+      staticMapSrc: '',
     };
   }
 
@@ -55,19 +56,24 @@ class App extends Component {
   handleLibraryInputSelected = (event) => {
     // console.log(this);
 
-    const selectedLibrary = event.target.value;
+    const userSelectedLibrary = event.target.value;
 
-    const finalLibrary = this.state.autoComplete.filter((item) => {
-      if (item.name === selectedLibrary) {
-        return true;
-      }
-    });
+    const finalLibrary = this.state.autoComplete.filter(
+      (item) => item.name === userSelectedLibrary
+    );
+
     console.log(finalLibrary);
-    const selectedLibraryLatitude =
+    const userSelectedLibraryLatitude =
       finalLibrary[0].place.geometry.coordinates[1];
-    const selectedLibraryLongitude =
+    const userSelectedLibraryLongitude =
       finalLibrary[0].place.geometry.coordinates[0];
-    const selectedLibraryName = finalLibrary[0].name;
+    const userSelectedLibraryName = finalLibrary[0].name;
+
+    const selectedLibrary = {
+      name: userSelectedLibraryName,
+      latitude: userSelectedLibraryLatitude,
+      longitude: userSelectedLibraryLongitude,
+    };
 
     // grab name + store name in input field
     // grab the L&L + store for the next API call
@@ -75,13 +81,11 @@ class App extends Component {
 
     this.setState(
       {
-        selectedLibraryLatitude,
-        selectedLibraryLongitude,
-        selectedLibraryName,
+        selectedLibrary,
       },
       () => {
         this.setState({
-          libraryInput: selectedLibraryName,
+          libraryInput: userSelectedLibraryName,
           showSuggestions: false,
         });
       }
@@ -90,6 +94,7 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
+
     // console.log('form submitted');
     // start axios call (value of librarySelected and Radio Input)
     /*
@@ -113,7 +118,7 @@ class App extends Component {
       url: urlSearch,
       params: {
         key: apiKey,
-        circle: `${this.state.selectedLibraryLongitude},${this.state.selectedLibraryLatitude},${this.state.selectedRadius}`,
+        circle: `${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius}`,
         sort: 'distance',
         q: 'Coffee Shop',
         pageSize: 10,
@@ -121,22 +126,53 @@ class App extends Component {
     })
       .then((response) => {
         console.log(response);
+        // const coffeeShopCoordinates = response.data.results[1].place.geometry.coordinates
+
         this.setState({ coffeeShops: [...response.data.results] });
       })
       .then(() => {
         const radiusDistance = this.state.selectedRadius / 1000;
 
-        axios({
-          url: urlMap,
-          params: {
-            key: apiKey,
-            scalebar: 'true|bottom',
-            location: 'locations of the coffee shops',
-            shape: `radius:${radiusDistance}km|${this.state.selectedLibraryLongitude},${this.state.selectedLibraryLatitude},${this.state.selectedRadius}`,
-            size: '600, 600',
-            type: 'light',
-          },
-        });
+        const coffeeShopCoords = this.state.coffeeShops.map(
+          (coffeeShop, index) => {
+            // console.log(coffeeShop.place.geometry.coordinates);
+            const [long, lat] = coffeeShop.place.geometry.coordinates;
+            // return coffeeShop.place.geometry.coordinates;
+            return `${lat},${long}|marker-md-${index + 1}|`;
+            // 43.653427,-79.380764|marker-md-2||43.650378,-79.380355|
+          }
+        );
+
+        const joinedCoffeeShopCoords = coffeeShopCoords.join('|');
+        console.log(joinedCoffeeShopCoords);
+
+        // console.log(coffeeShopCoords);
+        // const coffeeShopMarkers = coffeeShopCoords.map(
+        //   (coffeeShopCoord, index) => {
+        //     coffeeShopCoord.join(`|marker-md${index + 1}||`);
+        //   }
+        // );
+
+        // console.log(coffeeShopMarkers);
+
+        const staticMapSrc = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
+
+        this.setState({ staticMapSrc });
+
+        // -	https://www.mapquestapi.com/staticmap/v5/map?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB&scalebar=true%7Cbottom&locations=43.653427,-79.380764%7Cmarker-md-2%7C%7C43.650378,-79.380355%7Cmarker-md-1&shape=radius:5km%7C43.651893,-79.381713&size=600, 600&type=light&zoom=16&start=43.651893,-79.381713&end=43.653427,-79.380764
+        // axios({
+        //   url: urlMap,
+        //   params: {
+        //     key: apiKey,
+        //     scalebar: 'true|bottom',
+        //     location: joinedCoffeeShopCoords,
+        //     shape: `radius:${radiusDistance}km|${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius}`,
+        //     size: '600, 600',
+        //     type: 'light',
+        //   },
+        // }).then((results) => {
+        //   console.log(results);
+        // });
       })
       .catch((error) => console.log(error));
   };
@@ -145,13 +181,13 @@ class App extends Component {
   -	https://www.mapquestapi.com/staticmap/v5/map
     
     ?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB
-    &scalebar=true%7Cbottom
+    &scalebar=true|bottom
     
     // values of the coffee shops (long, lat)
-    &locations=43.653427,-79.380764%7Cmarker-md-2%7C%7C43.650378,-79.380355%7Cmarker-md-1
+    &locations=43.653427,-79.380764|marker-md-2||43.650378,-79.380355|marker-md-1
     
     // values of the library
-    &shape=radius:5km%7C43.651893,-79.381713
+    &shape=radius:5km|43.651893,-79.381713
     &size=600, 600
     
     &type=light
@@ -180,7 +216,13 @@ class App extends Component {
       handleLibraryInputSelected,
       handleFormSubmit,
       handleRadiusSelected,
-      state: { libraryInput, autoComplete, showSuggestions, selectedRadius },
+      state: {
+        libraryInput,
+        autoComplete,
+        showSuggestions,
+        selectedRadius,
+        staticMapSrc,
+      },
     } = this;
     return (
       <div className='App'>
@@ -209,7 +251,7 @@ class App extends Component {
               );
             })}
         </ul>
-
+        <img src={staticMapSrc} />
         <Footer />
       </div>
     );
