@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 import Header from './Header';
 import Form from './Form';
-import Results from './Results';
+import CoffeeShopsList from './CoffeeShopsList';
 import Footer from './Footer';
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
       coffeeShops: [],
       distanceBetween: '',
       selectedCoffeeShop: '',
-      staticMapSrc: '',
+      displayedMap: '',
     };
   }
 
@@ -54,7 +54,6 @@ class App extends Component {
   };
 
   handleLibraryInputSelected = (event) => {
-    // console.log(this);
 
     const userSelectedLibrary = event.target.value;
 
@@ -62,7 +61,7 @@ class App extends Component {
       (item) => item.name === userSelectedLibrary
     );
 
-    console.log(finalLibrary);
+    // console.log(finalLibrary);
     const userSelectedLibraryLatitude =
       finalLibrary[0].place.geometry.coordinates[1];
     const userSelectedLibraryLongitude =
@@ -82,6 +81,7 @@ class App extends Component {
     this.setState(
       {
         selectedLibrary,
+
       },
       () => {
         this.setState({
@@ -95,21 +95,7 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    // console.log('form submitted');
-    // start axios call (value of librarySelected and Radio Input)
-    /*
-    whats being sent
-    https://www.mapquestapi.com/search/v4/place?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB&circle=33.63361,+-112.426403,+5&sort=distance&q=Coffee+Shop&pageSize=10
 
-
-    */
-
-    // -	https://www.mapquestapi.com/search/v4/place
-    // ?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB
-    // &circle=-79.381713, 43.651893, 5000
-    // &sort=distance
-    // &q=Coffee Shop
-    // &pageSize=10
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
     const urlMap = 'https://www.mapquestapi.com/staticmap/v5/map';
@@ -119,16 +105,23 @@ class App extends Component {
       params: {
         key: apiKey,
         circle: `${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius}`,
-        sort: 'distance',
+        sort: 'relevance',
         q: 'Coffee Shop',
-        pageSize: 10,
+        pageSize: 50,
       },
     })
       .then((response) => {
-        console.log(response);
-        // const coffeeShopCoordinates = response.data.results[1].place.geometry.coordinates
+        const returnedCoffeeShops = response.data.results;
+        const randomCoffeeShops = [];
+        console.log(returnedCoffeeShops);
 
-        this.setState({ coffeeShops: [...response.data.results] });
+        for (let i = 0; i < 10; i++) {
+          const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
+          randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        }
+
+        this.setState({ coffeeShops: randomCoffeeShops });
+        console.log(this.state.coffeeShops);
       })
       .then(() => {
         const radiusDistance = this.state.selectedRadius / 1000;
@@ -144,64 +137,57 @@ class App extends Component {
         );
 
         const joinedCoffeeShopCoords = coffeeShopCoords.join('|');
-        console.log(joinedCoffeeShopCoords);
 
-        // console.log(coffeeShopCoords);
-        // const coffeeShopMarkers = coffeeShopCoords.map(
-        //   (coffeeShopCoord, index) => {
-        //     coffeeShopCoord.join(`|marker-md${index + 1}||`);
-        //   }
-        // );
+        const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
-        // console.log(coffeeShopMarkers);
+        this.setState({ displayedMap: mapWithoutRoute });
 
-        const staticMapSrc = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
-
-        this.setState({ staticMapSrc });
-
-        // -	https://www.mapquestapi.com/staticmap/v5/map?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB&scalebar=true%7Cbottom&locations=43.653427,-79.380764%7Cmarker-md-2%7C%7C43.650378,-79.380355%7Cmarker-md-1&shape=radius:5km%7C43.651893,-79.381713&size=600, 600&type=light&zoom=16&start=43.651893,-79.381713&end=43.653427,-79.380764
-        // axios({
-        //   url: urlMap,
-        //   params: {
-        //     key: apiKey,
-        //     scalebar: 'true|bottom',
-        //     location: joinedCoffeeShopCoords,
-        //     shape: `radius:${radiusDistance}km|${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius}`,
-        //     size: '600, 600',
-        //     type: 'light',
-        //   },
-        // }).then((results) => {
-        //   console.log(results);
-        // });
       })
       .catch((error) => console.log(error));
   };
 
-  /*
-  -	https://www.mapquestapi.com/staticmap/v5/map
-    
-    ?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB
-    &scalebar=true|bottom
-    
-    // values of the coffee shops (long, lat)
-    &locations=43.653427,-79.380764|marker-md-2||43.650378,-79.380355|marker-md-1
-    
-    // values of the library
-    &shape=radius:5km|43.651893,-79.381713
-    &size=600, 600
-    
-    &type=light
-    &zoom=16
-    
-    // values of the library
-    &start=43.651893,-79.381713
-
-    // value of selected coffee shop
-    &end=43.653427,-79.380764
+  handleCoffeeShopSelected = (event) => {
+    console.log(event)
+    const userSelectedCoffeeShop = event.target.value;
 
 
+    const finalCoffeeShop = this.state.coffeeShops.filter(
+      (item) => item.id === userSelectedCoffeeShop
+    );
 
-  */
+    // console.log(finalLibrary);
+    const userSelectedCoffeeShopLatitude =
+      finalCoffeeShop[0].place.geometry.coordinates[1];
+    const userSelectedCoffeeShopLongitude =
+      finalCoffeeShop[0].place.geometry.coordinates[0];
+    const userSelectedCoffeeShopName = finalCoffeeShop[0].name;
+
+    const selectedCoffeeShop = {
+      name: userSelectedCoffeeShopName,
+      latitude: userSelectedCoffeeShopLatitude,
+      longitude: userSelectedCoffeeShopLongitude,
+    }
+    this.setState(
+      {
+        selectedCoffeeShop,
+      },
+
+      () => {
+
+        const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+
+        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}`
+
+        const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}`
+
+        // https://www.mapquestapi.com/staticmap/v5/map?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB&scalebar=true%7Cbottom&size=600, 600&zoom=16&start=43.651893,-79.381713&end=43.653427,-79.380764
+
+        // const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
+
+        this.setState({ displayedMap: mapWithRoute });
+      }
+    )
+  }
 
   handleRadiusSelected = (event) => {
     const selectedRadius = event.target.value;
@@ -216,12 +202,14 @@ class App extends Component {
       handleLibraryInputSelected,
       handleFormSubmit,
       handleRadiusSelected,
+      handleCoffeeShopSelected,
       state: {
         libraryInput,
         autoComplete,
         showSuggestions,
         selectedRadius,
-        staticMapSrc,
+        displayedMap,
+        coffeeShops,
       },
     } = this;
     return (
@@ -251,7 +239,10 @@ class App extends Component {
               );
             })}
         </ul>
-        <img src={staticMapSrc} />
+        <img src={displayedMap} />
+        <CoffeeShopsList
+          handleCoffeeShopSelected={handleCoffeeShopSelected}
+          coffeeShops={coffeeShops} />
         <Footer />
       </div>
     );
