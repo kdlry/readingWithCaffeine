@@ -5,7 +5,6 @@ const Form = (props) => {
     handleLibraryInputChange,
     libraryInput,
     handleFormSubmit,
-    selectAlLibrary,
     clicked,
     selectedLibraryName,
   } = props;
@@ -24,6 +23,9 @@ const Form = (props) => {
                 placeholder=''
               />
             </div>
+
+            {/* 1. store selectedLibrary in input field  
+            create toggle to close autocomplete box*/}
 
             {/* <div>
                     <label htmlFor=""></label>

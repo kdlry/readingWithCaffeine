@@ -24,6 +24,7 @@ class App extends Component {
       selectedLibraryName: '',
     };
   }
+
   componentDidMount() {}
 
   handleLibraryInputChange = (event) => {
@@ -46,22 +47,20 @@ class App extends Component {
         }).then((res) => {
           // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
-
-          //
         });
       }
     });
   };
 
-  selectAlLibrary = () => {
-    const increment = this.state.clicked + 1;
-    const selectedLibraryName = this.state.autoComplete.name;
-    this.setState({
-      clicked: increment,
-      selectedLibraryName: selectedLibraryName,
-    });
-    // console.log(this.state.autoComplete.name);
-  };
+  // selectAlLibrary = () => {
+  //   const increment = this.state.clicked + 1;
+  //   const selectedLibraryName = this.state.autoComplete.name;
+  //   this.setState({
+  //     clicked: increment,
+  //     selectedLibraryName: selectedLibraryName,
+  //   });
+  //   console.log(this.state.selectedLibraryName);
+  // };
 
   handleLibraryInputSelected = (event) => {
     // console.log(this);
@@ -78,6 +77,7 @@ class App extends Component {
     const selectedLibraryLongitude =
       finalLibrary[0].place.geometry.coordinates[1];
     const selectedLibraryName = finalLibrary[0].name;
+    const increment = this.state.clicked + 1;
 
     // grab name + store name in input field
     // grab the L&L + store for the next API call
@@ -87,6 +87,7 @@ class App extends Component {
       selectedLibraryLatitude,
       selectedLibraryLongitude,
       selectedLibraryName,
+      clicked: increment,
     });
   };
 
@@ -103,7 +104,7 @@ class App extends Component {
           libraryInput={this.libraryInput}
           handleLibraryInputChange={this.handleLibraryInputChange}
           handleFormSubmit={this.handleFormSubmit}
-          selectAlLibrary={this.selectedLibrary}
+          // selectAlLibrary={this.selectedLibrary}
           clicked={this.state.clicked}
           selectedLibraryName={this.state.selectedLibraryName}
         />
@@ -118,7 +119,7 @@ class App extends Component {
                   <button
                     key={results.id}
                     onClick={this.handleLibraryInputSelected}
-                    onClick={this.selectAlLibrary}
+                    // onClick={this.selectAlLibrary}
                     value={results.name}
                   >
                     {results.name}
