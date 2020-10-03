@@ -13,6 +13,9 @@ class App extends Component {
       libraryInput: '', // to register change of library selection
       autoComplete: [], // results from the prediction text
       selectedLibrary: {}, // to grab value of library // pop in here
+      selectedLibraryLatitude: '',
+      selectedLibraryLongitude: '',
+      selectedLibraryName: '',
       selectedRadius: '',
       coffeeShops: [],
       distanceBetween: '',
@@ -45,6 +48,8 @@ class App extends Component {
           .then((res) => {
             // console.log(res.data.results);
             this.setState({ autoComplete: [...res.data.results] })
+
+            // 
           });
       }
     })
@@ -53,15 +58,29 @@ class App extends Component {
 
 
   handleLibraryInputSelected = (event) => {
-    console.log(event.target.value);
+    // console.log(this);
     const selectedLibrary = event.target.value;
+
+    const finalLibrary = this.state.autoComplete.filter(item => {
+      if (item.name === selectedLibrary) {
+        return true;
+      }
+    })
+    console.log(finalLibrary);
+    const selectedLibraryLatitude = finalLibrary[0].place.geometry.coordinates[0];
+    const selectedLibraryLongitude = finalLibrary[0].place.geometry.coordinates[1];
+    const selectedLibraryName = finalLibrary[0].name;
+
+
 
     // grab name + store name in input field
     // grab the L&L + store for the next API call 
     // create toggle to close autocomplete box
 
     this.setState({
-      selectedLibrary
+      selectedLibraryLatitude,
+      selectedLibraryLongitude,
+      selectedLibraryName,
     })
   }
 
@@ -86,11 +105,11 @@ class App extends Component {
         <div>
           <h2>Results</h2>
           {this.state.autoComplete.map(results => {
-            console.log(results)
-            
-            return <button key={results.id} onClick={this.handleLibraryInputSelected} value={results.name}>
-            {results.name}</button>
-            
+            // console.log(results)
+            // console.log(this)
+            return <button key={results.id} onClick={this.handleLibraryInputSelected} value={results.name} >
+              {results.name}</button>
+
           })}
         </div>
 
