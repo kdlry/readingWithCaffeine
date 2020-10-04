@@ -7,3 +7,126 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 *, *:before, *:after {box-sizing: inherit}
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+
+
+/* ----------------------------------- LAYOUT */
+.wrapper {
+  max-width: 1400px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* ----------------------------------- FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+form button:hover,
+form button:focus {
+  cursor: pointer;
+}
+
+/* ----------------------------------- FORM > INPUT LOCATION CONTAINER  */
+.inputLocationContainer {
+  display: flex;
+  margin-bottom: 40px;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.inputLocationContainer label {
+  margin-right: 40px;
+  text-transform: uppercase;
+  width: 20%;
+  text-align: right;
+}
+
+.inputLocation {
+  width: 100%;
+  padding: 10px;
+  /* background-color: #CCC; */
+}
+
+.inputLocationResultsContainer {
+  position: relative;
+  width: 50%;
+}
+
+.inputLocationAutoComplete {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  z-index: 100;
+  border: 1px solid #111;
+  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
+}
+
+.autoCompleteResults button {
+  border: 0;
+  background-color: #EEE;
+  padding: 10px 0 10px 10px;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s;
+}
+
+.autoCompleteResults:not(:last-of-type) button {
+  border-bottom: 2px solid #111;
+}
+
+.autoCompleteResults button:hover,
+.autoCompleteResults button:focus {
+  cursor: pointer;
+  background-color: #CCC;
+}
+
+/* ----------------------------------- FORM > SELECTED RADIUS CONTAINER  */
+.selectedRadiusContainer {
+  display: flex;
+}
+
+.selectedRadiusContainer > *:not(:last-child) {
+  margin-right: 40px;
+}
+
+.selectedRadiusContainer p {
+  text-transform: uppercase;
+  width: 20%;
+  text-align: right;
+}
+
+.selectedRadiusContainer span {
+  text-transform: none;
+}
+
+.selectedRadiusInputContainer {
+  position: relative;
+  padding: 10px;
+}
+
+.selectedRadiusInputContainer input {
+  /* margin-right: 40px; */
+}
+
+.selectedRadiusInputContainer label {
+  position: absolute;
+  bottom: 0;
+}
+
+form button[type='submit'] {
+  padding: 20px;
+  border-radius: 50%;
+  background-color: #EEE;
+  border: 0;
+  text-transform: uppercase;
+}
+
+form button[type='submit']:hover,
+form button[type='submit']:focus {
+  background-color: #CCC;
+}

@@ -14,7 +14,7 @@ class App extends Component {
       libraryInput: '', // to register change of library selection
       autoComplete: [], // results from the prediction text
       selectedLibrary: {}, // to grab value of library // pop in here
-      showSuggestions: true,
+      showSuggestions: false,
       selectedRadius: 5000,
       coffeeShops: [],
       distanceBetween: '',
@@ -50,6 +50,8 @@ class App extends Component {
           // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
         });
+      } else if (libraryInput.length < 3) {
+        this.setState({showSuggestions: false});
       }
     });
   };
@@ -250,14 +252,19 @@ class App extends Component {
     return (
       <div className='App'>
         <Header />
+        <div className="wrapper">
         <Form
           libraryInput={libraryInput}
           handleLibraryInputChange={handleLibraryInputChange}
           handleFormSubmit={handleFormSubmit}
           handleRadiusSelected={handleRadiusSelected}
           handleTransportationChange={handleTransportationChange}
+          showSuggestions={showSuggestions}
+          autoComplete={autoComplete}
+          handleLibraryInputSelected={handleLibraryInputSelected}
         />
-        <ul>
+        </div>
+        {/* <ul>
           {showSuggestions === true &&
             autoComplete.map((results) => {
               return (
@@ -273,7 +280,7 @@ class App extends Component {
                 </li>
               );
             })}
-        </ul>
+        </ul> */}
         <img src={displayedMap} alt=""/>
         <CoffeeShopsList
           handleCoffeeShopSelected={handleCoffeeShopSelected}
