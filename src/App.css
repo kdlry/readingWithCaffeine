@@ -33,7 +33,6 @@ form button:focus {
 .inputLocationContainer {
   display: flex;
   margin-bottom: 40px;
-  /* justify-content: space-between; */
   align-items: center;
 }
 
@@ -46,13 +45,12 @@ form button:focus {
 
 .inputLocation {
   width: 100%;
-  padding: 10px;
-  /* background-color: #CCC; */
+  padding: 5px;
 }
 
 .inputLocationResultsContainer {
   position: relative;
-  width: 50%;
+  width: 58%;
 }
 
 .inputLocationAutoComplete {
@@ -62,13 +60,14 @@ form button:focus {
   list-style: none;
   width: 100%;
   z-index: 100;
-  border: 1px solid #111;
-  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
+  border: 1px solid #350482;
+  box-shadow: 0 2px 3px rgba(53, 4, 130, 0.4);
 }
 
 .autoCompleteResults button {
   border: 0;
-  background-color: #EEE;
+  background-color:#b20061;
+  color: #ffe1f9;
   padding: 10px 0 10px 10px;
   width: 100%;
   text-align: left;
@@ -76,13 +75,13 @@ form button:focus {
 }
 
 .autoCompleteResults:not(:last-of-type) button {
-  border-bottom: 2px solid #111;
+  border-bottom: 1px solid #ffe1f9;
 }
 
 .autoCompleteResults button:hover,
 .autoCompleteResults button:focus {
   cursor: pointer;
-  background-color: #CCC;
+  background-color: #350482;
 }
 
 /* ----------------------------------- FORM > SELECTED RADIUS CONTAINER  */
@@ -107,6 +106,8 @@ form button:focus {
 .selectedRadiusInputContainer {
   position: relative;
   padding: 10px;
+  width: 50px;
+  border: 2px solid transparent;
 }
 
 .selectedRadiusInputContainer input {
@@ -115,18 +116,42 @@ form button:focus {
 
 .selectedRadiusInputContainer label {
   position: absolute;
-  bottom: 0;
+  bottom: -10px;
+  left: -10px;
+  text-align: center;
+  width: 100%;
+  border: 2px solid transparent;
+}
+
+.selectedRadiusInputContainer label::after {
+  content: '';
+  padding: 10px;
+  border: 2px solid #b20061;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  position: absolute;
+  top: -35px;
+  left: 8px
+}
+
+.selectedRadiusInputContainer input:checked + label::after {
+  background-color: #350482;
 }
 
 form button[type='submit'] {
-  padding: 20px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
-  background-color: #EEE;
+  background-color: #b20061;
+  color: #ffe1f9;
   border: 0;
   text-transform: uppercase;
+  border: 2px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 form button[type='submit']:hover,
 form button[type='submit']:focus {
-  background-color: #CCC;
+  background-color: #350482;
+  border-color: #b20061;
 }

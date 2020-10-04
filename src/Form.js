@@ -56,28 +56,28 @@ const Form = (props) => {
         <div className="selectedRadiusContainer">
           <p>Radius <span>(km)</span></p>
           <div className="selectedRadiusInputContainer">
-            <label htmlFor='radius5km'>5</label>
             <input
               type='radio'
               value={5000}
               id='radius5km'
               name='selectedRadius'
-              placeholder=''
+              className='sr-only'
               onChange={handleRadiusSelected}
               defaultChecked
             />
+            <label htmlFor='radius5km'>5</label>
           </div>
 
           <div className="selectedRadiusInputContainer">
-            <label htmlFor='radius20km'>20</label>
             <input
               type='radio'
               value={20000}
               id='radius20km'
               name='selectedRadius'
               onChange={handleRadiusSelected}
-              placeholder=''
+              className='sr-only'
             />
+            <label htmlFor='radius20km'>20</label>
           </div>
 
           <div>
