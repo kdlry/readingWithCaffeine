@@ -8,9 +8,22 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
-
+/* GENERAL STYLES  */
 html {
     font-size: 62.5%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; 
+}
+
+h1,
+p {
+    margin: 0px;
+}
+
+a {
+    color: #ffe1f9;
 }
 
 .wrapper {
@@ -26,35 +39,80 @@ img {
 }
 
 h1 {
-    font-family: 'Sansita Swashed', cursive;
-    font-size: clamp(6rem, 6vw, 10rem);
+    font-family: 'Maitree', serif;
+    font-size: clamp(5.5rem, 6vw, 10rem);
     width: 300px;
     color: #fff;
-    text-shadow: 2px 2px#b20062;
-    margin: 0px;
+    text-shadow: 3px 2px 1px #b20062;
     padding: 20px;
-    /* border: 5px solid #ffe1f9; */
     border-radius: 10px;
 }
 
 header {
-    height: 75vh;
+    height: 80vh;
     display: flex;
     align-items: flex-end;
-    background-image: url('./assets/thomas-park-unsplash.png'); 
-    /* linear-gradient(#b200625f, #ffe1f976),  */
+    background-image: linear-gradient(to bottom,rgba(255, 225, 249, .1), rgba(10, 10, 10, .2)), url('./assets/thomas-park-unsplash.png'); 
+    /* background-image: url('./assets/thomas-park-unsplash.png'); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
     padding-bottom: 100px;
-    border-bottom-right-radius: 50% 5%;
-
 }
 
 .caffeine {
     display: block;
 }
 
-.animate__bounceInLeft {
-    animation-duration: 1.5s;
+.animate__bounceIn {
+    animation-duration: 2s;
+}
+
+
+
+/* FOOTER STYLES */
+
+footer {
+    color: #fff;
+    background-color: #350482;
+    padding: 25px 0px;
+}
+
+footer p {
+    font-size: clamp(1.4rem, 1.4vw, 1.5rem);
+    text-transform: uppercase;
+}
+
+.footerFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.creators {
+    font-weight: bold;
+    width: 60%;
+}
+
+.photoCredit {
+    width: 40%;
+    /* padding-left: 20px; */
+    text-align: right;
+}
+
+
+@media (max-width: 500px) {
+    .footerFlex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .creators {
+        padding-bottom: 15px;
+    }
+
+    .creators,
+    .photoCredit {
+        width: 100%;
+        text-align: center;
+    }
 }
