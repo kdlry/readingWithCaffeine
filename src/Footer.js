@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <>
       <p>
-        created by / at <a href='https://junocollege.com/'>Juno</a>
+        Created by Andre Facey+ConnieTsang+Kristen Delorey+Raphael Roques at <a href='https://junocollege.com/'>Juno College</a>
       </p>
     </>
   );

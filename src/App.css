@@ -7,3 +7,54 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 *, *:before, *:after {box-sizing: inherit}
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+
+
+html {
+    font-size: 62.5%;
+}
+
+.wrapper {
+    width: 85%;
+    max-width: 1150px;
+    margin: 0px auto;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1 {
+    font-family: 'Sansita Swashed', cursive;
+    font-size: clamp(6rem, 6vw, 10rem);
+    width: 300px;
+    color: #fff;
+    text-shadow: 2px 2px#b20062;
+    margin: 0px;
+    padding: 20px;
+    /* border: 5px solid #ffe1f9; */
+    border-radius: 10px;
+}
+
+header {
+    height: 75vh;
+    display: flex;
+    align-items: flex-end;
+    background-image: url('./assets/thomas-park-unsplash.png'); 
+    /* linear-gradient(#b200625f, #ffe1f976),  */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 100px;
+    border-bottom-right-radius: 50% 5%;
+
+}
+
+.caffeine {
+    display: block;
+}
+
+.animate__bounceInLeft {
+    animation-duration: 1.5s;
+}

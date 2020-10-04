@@ -2,9 +2,11 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <>
-      <h1>Reading With Caffeine</h1>
-    </>
+    <header>
+      <div class="wrapper headerFlex">
+        <h1 class="highlight">Reading With<span class="caffeine animate__animated animate__bounceInLeft" >Caffeine</span></h1>
+      </div>
+    </header>
   );
 };
 
