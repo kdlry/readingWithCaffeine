@@ -181,30 +181,30 @@ class App extends Component {
 
 
         const mapWithRoute =
-        this.state.directionsSessionID === '' ? 
-         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc` 
-        : 
-         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+          this.state.directionsSessionID === '' ?
+            `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
+            :
+            `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
 
 
 
         // const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`
-        
+
 
 
         const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-        
+
         axios({
           url: directionsWithRoute
         }).then(results => {
           console.log(results);
           const directions = results.data.route.legs[0].maneuvers;
-          
+
           const directionsToCoffeeShop = directions.map(direction => {
             return direction.narrative;
           })
           const directionsSessionID = results.data.route.sessionId;
-          this.setState({directionsToCoffeeShop, directionsSessionID})
+          this.setState({ directionsToCoffeeShop, directionsSessionID })
 
         })
 
@@ -227,7 +227,7 @@ class App extends Component {
   handleTransportationChange = (event) => {
     const modeOfTransportation = event.target.value;
 
-    this.setState({modeOfTransportation});
+    this.setState({ modeOfTransportation });
   }
 
   render() {
@@ -274,12 +274,18 @@ class App extends Component {
               );
             })}
         </ul>
-        <img src={displayedMap} alt=""/>
-        <CoffeeShopsList
-          handleCoffeeShopSelected={handleCoffeeShopSelected}
-          coffeeShops={coffeeShops} />
+        <div className="mapAndCoffeeShopContainer wrapper">
+          <div className="map">
+            <img src={displayedMap} alt="" />
+          </div>
+          <CoffeeShopsList
+            handleCoffeeShopSelected={handleCoffeeShopSelected}
+            coffeeShops={coffeeShops} />
+        </div>
 
-        <Directions 
+
+
+        <Directions
           directionsToCoffeeShop={directionsToCoffeeShop}
         />
         <Footer />
