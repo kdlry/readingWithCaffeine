@@ -52,7 +52,7 @@ class App extends Component {
           this.setState({ autoComplete: [...res.data.results] });
         });
       } else if (libraryInput.length < 3) {
-        this.setState({showSuggestions: false});
+        this.setState({ showSuggestions: false });
       }
     });
   };
@@ -256,31 +256,52 @@ class App extends Component {
       <div className='App'>
         <Header />
         <div className="wrapper">
-        <Instructions />
-        <Form
-          libraryInput={libraryInput}
-          handleLibraryInputChange={handleLibraryInputChange}
-          handleFormSubmit={handleFormSubmit}
-          handleRadiusSelected={handleRadiusSelected}
-          handleTransportationChange={handleTransportationChange}
-          showSuggestions={showSuggestions}
-          autoComplete={autoComplete}
-          handleLibraryInputSelected={handleLibraryInputSelected}
-        />
-        </div>
-        
-        <img src={displayedMap} alt=""/>
-        <CoffeeShopsList
-          handleCoffeeShopSelected={handleCoffeeShopSelected}
-          coffeeShops={coffeeShops} />
+          <Instructions />
+          <Form
+            libraryInput={libraryInput}
+            handleLibraryInputChange={handleLibraryInputChange}
+            handleFormSubmit={handleFormSubmit}
+            handleRadiusSelected={handleRadiusSelected}
+            handleTransportationChange={handleTransportationChange}
+            showSuggestions={showSuggestions}
+            autoComplete={autoComplete}
+            handleLibraryInputSelected={handleLibraryInputSelected}
+          />
+          {/* <ul>
+          {showSuggestions === true &&
+            autoComplete.map((results) => {
+              return (
+                <li className='autoCompleteResults'>
+                  <button
+                    type='button'
+                    key={results.id}
+                    onClick={handleLibraryInputSelected}
+                    value={results.name}
+                  >
+                    {results.name}
+                  </button>
+                </li>
+              );
+            })}
+        </ul> */}
+          <div className="mapAndCoffeeShopContainer">
+            <div className="map">
+              <img src={displayedMap} alt="" />
+            </div>
+            <CoffeeShopsList
+              handleCoffeeShopSelected={handleCoffeeShopSelected}
+              coffeeShops={coffeeShops} />
+          </div>
 
-        <Directions
-          selectedCoffeeShop={selectedCoffeeShop}
-          modeOfTransportation={modeOfTransportation}
-          handleTransportationChange={handleTransportationChange}
-          directionsToCoffeeShop={directionsToCoffeeShop}
-        />
+          <Directions
+            selectedCoffeeShop={selectedCoffeeShop}
+            modeOfTransportation={modeOfTransportation}
+            handleTransportationChange={handleTransportationChange}
+            directionsToCoffeeShop={directionsToCoffeeShop}
+          />
+        </div>
         <Footer />
+
       </div>
     );
   }

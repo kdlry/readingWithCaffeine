@@ -5,22 +5,25 @@ const CoffeeShopsList = (props) => {
     const { coffeeShops, handleCoffeeShopSelected } = props
     return (
         <>
-            <ul>
-                {coffeeShops.map((results) => {
-                    return (
-                        <li className=''>
-                            <button
-                                type='button'
-                                key={results.id}
-                                onClick={handleCoffeeShopSelected}
-                                value={results.id}>
-                                {results.displayString}
-                            </button>
+            <div className="coffeeShops">
+                <ul>
+                    {coffeeShops.map((results) => {
+                        return (
+                            <li className=''>
+                                <button
+                                    type='button'
+                                    key={results.id}
+                                    onClick={handleCoffeeShopSelected}
+                                    value={results.id}>
+                                    {results.displayString}
+                                </button>
 
-                        </li>
-                    );
-                })}
-            </ul>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+
         </>
     );
 };
