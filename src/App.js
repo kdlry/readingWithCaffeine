@@ -42,13 +42,14 @@ class App extends Component {
 
         axios({
           url: 'http://www.mapquestapi.com/search/v3/prediction',
+          // url: 'https://www.mapquestapi.com/search/v4/place',
           params: {
             q: this.state.libraryInput,
             collection: 'poi',
             key: apiKey,
           },
         }).then((res) => {
-          // console.log(res.data.results);
+          console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
         });
       } else if (libraryInput.length < 3) {
@@ -99,10 +100,8 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
-    const urlMap = 'https://www.mapquestapi.com/staticmap/v5/map';
 
     axios({
       url: urlSearch,
@@ -118,7 +117,8 @@ class App extends Component {
         const returnedCoffeeShops = response.data.results;
         const randomCoffeeShops = [];
         console.log(returnedCoffeeShops);
-
+        // randomize all numbers
+        // use for counter to just push 10 shops
         for (let i = 0; i < 10; i++) {
           const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
           randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
@@ -171,28 +171,23 @@ class App extends Component {
       latitude: userSelectedCoffeeShopLatitude,
       longitude: userSelectedCoffeeShopLongitude,
     }
+
+
     this.setState(
       {
         selectedCoffeeShop,
+        directionsSessionID: ''
       },
-
       () => {
 
         const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
 
-        // const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
 
-
-        const mapWithRoute =
-          this.state.directionsSessionID === '' ?
-            `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-            :
-            `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-
-
-        // const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`
-
+        // const mapWithRoute =
+          // this.state.directionsSessionID === '' ?
+            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
+            // :
+            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
 
 
         const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
@@ -206,19 +201,86 @@ class App extends Component {
           const directionsToCoffeeShop = directions.map(direction => {
             return direction.narrative;
           })
+
           const directionsSessionID = results.data.route.sessionId;
-          this.setState({ directionsToCoffeeShop, directionsSessionID })
+          this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
 
+            const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+            this.setState({ displayedMap: mapWithRoute });
+          })
+          
         })
-
-        // https://www.mapquestapi.com/staticmap/v5/map?key=rNUBvav2dEGGss4WVvHK64tVGGygn3zB&scalebar=true%7Cbottom&size=600, 600&zoom=16&start=43.651893,-79.381713&end=43.653427,-79.380764
-
-        // const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
-
-        this.setState({ displayedMap: mapWithRoute });
+        
       }
     )
   }
+
+  getSelectedTransportation = () => {
+
+    const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+
+
+        // const mapWithRoute =
+          // this.state.directionsSessionID === '' ?
+            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
+            // :
+            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+
+
+        const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
+
+        axios({
+          url: directionsWithRoute
+        }).then(results => {
+          console.log(results);
+          const directions = results.data.route.legs[0].maneuvers;
+
+          const directionsToCoffeeShop = directions.map(direction => {
+            return direction.narrative;
+          })
+
+          const directionsSessionID = results.data.route.sessionId;
+          this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
+
+            const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+            this.setState({ displayedMap: mapWithRoute });
+          })
+          
+        })
+
+    // const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+
+    // // const mapWithRoute =
+    // //     `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+
+    // const mapWithRoute =
+    // //       this.state.directionsSessionID === '' ?
+    //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
+    // //         :
+    // //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+
+    // const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
+
+    // axios({
+    //   url: directionsWithRoute
+    // }).then(results => {
+    //   console.log(results);
+    //   const directions = results.data.route.legs[0].maneuvers;
+
+    //   const directionsToCoffeeShop = directions.map(direction => {
+    //     return direction.narrative;
+    //   })
+    //   const directionsSessionID = results.data.route.sessionId;
+    //   this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
+
+    //   })
+    //   this.setState({ displayedMap: mapWithRoute });
+      
+    // })
+
+
+  }
+
 
   handleRadiusSelected = (event) => {
     const selectedRadius = event.target.value;
@@ -230,7 +292,7 @@ class App extends Component {
   handleTransportationChange = (event) => {
     const modeOfTransportation = event.target.value;
 
-    this.setState({ modeOfTransportation });
+    this.setState({ modeOfTransportation }, this.getSelectedTransportation);
   }
 
   render() {

@@ -236,6 +236,7 @@ form button:focus {
     display: flex;
     justify-content: space-around;
     background-color: rgb(225, 221, 221);
+    /* background-color:  #ffe1f9; */
     padding: 10px;
 }
 
