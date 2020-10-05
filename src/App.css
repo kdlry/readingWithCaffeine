@@ -7,3 +7,50 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 *, *:before, *:after {box-sizing: inherit}
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+
+/* Stripping ----------------------- */
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    color: #3a3a3a;
+}
+
+h2,
+p,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+ol {
+    list-style: none;
+}
+
+/* Instructions section ----------------------- */
+.instructionsSection {
+    margin: 50px 0;
+}
+
+.instructionsSection h2 {
+    padding-bottom: 15px;
+}
+
+.instructionsSection p:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+/* Transportations and directions ----------------------- */
+.transportationAndDirections {
+    margin: 50px 0;
+}
+
+.transportation {
+    margin-bottom: 25px;
+}
+
+ol li:not(:last-child) {
+    padding-bottom: 10px;
+}
