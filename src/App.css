@@ -1,26 +1,237 @@
 html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}.clearfix:after{visibility:hidden;display:block;font-size:0;content:'';clear:both;height:0}html{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;border:0;padding:0;white-space:nowrap;clip-path:inset(100%);clip:rect(0 0 0 0);overflow:hidden}
 
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
+
+/* GENERAL STYLES  */
 html {
-    font-size: 62.5%; 
-}
-.wrapper {
-    max-width: 1080px;
-    margin: 0 auto;
-    width: 90%;
+    font-size: 62.5%;
 }
 
-img {
-    width: 100%;
+body {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 1.6rem;
+    color: #3a3a3a;
 }
 
+h1,
+h2,
+p,
+ol,
 ul,
 li {
-    list-style: none;
     margin: 0;
     padding: 0;
 }
 
+ol,ul,li {
+    list-style: none;
+}
+
+a {
+    color: #ffe1f9;
+}
+
+.wrapper {
+    width: 85%;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1 {
+    font-family: 'Maitree', serif;
+    font-size: clamp(5.5rem, 6vw, 10rem);
+    width: 300px;
+    color: #fff;
+    text-shadow: 3px 2px 1px #b20062;
+    padding: 20px;
+}
+
+header {
+    height: 80vh;
+    display: flex;
+    align-items: flex-end;
+    background-image: linear-gradient(to bottom,rgba(255, 225, 249, .1), rgba(10, 10, 10, .2)), url('./assets/thomas-park-unsplash.png'); 
+    /* background-image: url('./assets/thomas-park-unsplash.png'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 100px;
+}
+
+.caffeine {
+    display: block;
+}
+
+.animate__bounceIn {
+    animation-duration: 2s;
+}
+
+/* Instructions section ----------------------- */
+.instructionsSection {
+    margin: 50px 0;
+}
+
+.instructionsSection h2 {
+    padding-bottom: 15px;
+}
+
+.instructionsSection p:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+/* ----------------------------------- FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+form button:hover,
+form button:focus {
+  cursor: pointer;
+}
+
+/* ----------------------------------- FORM > TOP SECTION */
+.formTopSection {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.formTopSection label {
+  margin-right: 40px;
+  text-transform: uppercase;
+  width: 20%;
+  text-align: right;
+}
+
+
+
+
+/* ----------------------------------- FORM > TOP SECTION > INPUT LOCATION CONTAINER  */
+.inputLocationContainer {
+  position: relative;
+  width: 58%;
+}
+
+.inputLocation {
+  width: 100%;
+  padding: 5px;
+}
+
+.inputLocation:focus {
+  outline-color: #b20061;
+}
+
+/* ----------------------------------- FORM > TOP SECTION > INPUT LOCATION CONTAINER > AUTOCOMPLETE */
+.inputLocationAutoComplete {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  z-index: 100;
+  border: 1px solid #350482;
+  box-shadow: 0 2px 3px rgba(53, 4, 130, 0.4);
+}
+
+.autoCompleteResults button {
+  border: 0;
+  background-color:#b20061;
+  color: #ffe1f9;
+  padding: 10px 0 10px 10px;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.3s;
+}
+
+.autoCompleteResults:not(:last-of-type) button {
+  border-bottom: 1px solid #ffe1f9;
+}
+
+.autoCompleteResults button:hover,
+.autoCompleteResults button:focus {
+  cursor: pointer;
+  background-color: #350482;
+}
+
+/* ----------------------------------- FORM > BOTTOM SECTION  */
+.formBottomSection {
+  display: flex;
+}
+
+.formBottomSection > *:not(:last-child) {
+  margin-right: 40px;
+}
+
+.formBottomSection p {
+  text-transform: uppercase;
+  width: 20%;
+  text-align: right;
+}
+
+.formBottomSection span {
+  text-transform: none;
+}
+
+/* ----------------------------------- FORM > BOTTOM SECTION > SELECTED RADIUS CONTAINER  */
+.selectedRadiusContainer {
+  position: relative;
+  padding: 10px;
+  width: 50px;
+  border: 2px solid transparent;
+}
+
+.selectedRadiusContainer label {
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  text-align: center;
+  width: 100%;
+  border: 2px solid transparent;
+}
+
+.selectedRadiusContainer label::after {
+  content: '';
+  padding: 10px;
+  border: 2px solid #b20061;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  position: absolute;
+  top: -35px;
+  left: 8px
+}
+
+.selectedRadiusContainer input:checked + label::after {
+  background-color: #350482;
+}
+
+/* ----------------------------------- FORM > BOTTOM SECTION > SUBMIT BUTTON  */
+.formSubmitButton {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: #b20061;
+  color: #ffe1f9;
+  border: 0;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.formSubmitButton:hover,
+.formSubmitButton:focus {
+  background-color: #350482;
+  border-color: #b20061;
+}
 .mapAndCoffeeShopContainer {
     display: flex;
     justify-content: space-around;
@@ -29,7 +240,7 @@ li {
 }
 
 
-
+/* map------------------------------------------- */
 .map {
     width: 50%;
     background-color: black;
@@ -104,4 +315,67 @@ li {
 .coffeeShops li:nth-child(10){
     margin-bottom: 0px;
 }
+
+/* Transportations and directions ----------------------- */
+.transportationAndDirections {
+    margin: 50px 0;
+}
+
+.transportation {
+    margin-bottom: 25px;
+}
+
+ol li:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+
+/* FOOTER STYLES */
+
+footer {
+    color: #fff;
+    background-color: #350482;
+    padding: 25px 0px;
+}
+
+footer p {
+    font-size: clamp(1.4rem, 1.4vw, 1.5rem);
+    text-transform: uppercase;
+}
+
+.footerFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.creators {
+    font-weight: bold;
+    width: 60%;
+}
+
+.photoCredit {
+    width: 40%;
+    text-align: right;
+}
+
+
+@media (max-width: 500px) {
+    .footerFlex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .creators {
+        padding-bottom: 15px;
+    }
+
+    .creators,
+    .photoCredit {
+        width: 100%;
+        text-align: center;
+    } 
+}
+
+
+
 

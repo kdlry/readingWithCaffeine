@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import Header from './Header';
+import Instructions from './Instructions';
 import Form from './Form';
 import CoffeeShopsList from './CoffeeShopsList';
 import Directions from './Directions';
@@ -14,7 +15,7 @@ class App extends Component {
       libraryInput: '', // to register change of library selection
       autoComplete: [], // results from the prediction text
       selectedLibrary: {}, // to grab value of library // pop in here
-      showSuggestions: true,
+      showSuggestions: false,
       selectedRadius: 5000,
       coffeeShops: [],
       distanceBetween: '',
@@ -50,6 +51,8 @@ class App extends Component {
           // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
         });
+      } else if (libraryInput.length < 3) {
+        this.setState({ showSuggestions: false });
       }
     });
   };
@@ -244,20 +247,27 @@ class App extends Component {
         showSuggestions,
         displayedMap,
         coffeeShops,
+        selectedCoffeeShop,
+        modeOfTransportation,
         directionsToCoffeeShop,
       },
     } = this;
     return (
       <div className='App'>
         <Header />
-        <Form
-          libraryInput={libraryInput}
-          handleLibraryInputChange={handleLibraryInputChange}
-          handleFormSubmit={handleFormSubmit}
-          handleRadiusSelected={handleRadiusSelected}
-          handleTransportationChange={handleTransportationChange}
-        />
-        <ul>
+        <div className="wrapper">
+          <Instructions />
+          <Form
+            libraryInput={libraryInput}
+            handleLibraryInputChange={handleLibraryInputChange}
+            handleFormSubmit={handleFormSubmit}
+            handleRadiusSelected={handleRadiusSelected}
+            handleTransportationChange={handleTransportationChange}
+            showSuggestions={showSuggestions}
+            autoComplete={autoComplete}
+            handleLibraryInputSelected={handleLibraryInputSelected}
+          />
+          {/* <ul>
           {showSuggestions === true &&
             autoComplete.map((results) => {
               return (
@@ -273,22 +283,25 @@ class App extends Component {
                 </li>
               );
             })}
-        </ul>
-        <div className="mapAndCoffeeShopContainer wrapper">
-          <div className="map">
-            <img src={displayedMap} alt="" />
+        </ul> */}
+          <div className="mapAndCoffeeShopContainer">
+            <div className="map">
+              <img src={displayedMap} alt="" />
+            </div>
+            <CoffeeShopsList
+              handleCoffeeShopSelected={handleCoffeeShopSelected}
+              coffeeShops={coffeeShops} />
           </div>
-          <CoffeeShopsList
-            handleCoffeeShopSelected={handleCoffeeShopSelected}
-            coffeeShops={coffeeShops} />
+
+          <Directions
+            selectedCoffeeShop={selectedCoffeeShop}
+            modeOfTransportation={modeOfTransportation}
+            handleTransportationChange={handleTransportationChange}
+            directionsToCoffeeShop={directionsToCoffeeShop}
+          />
         </div>
-
-
-
-        <Directions
-          directionsToCoffeeShop={directionsToCoffeeShop}
-        />
         <Footer />
+
       </div>
     );
   }
