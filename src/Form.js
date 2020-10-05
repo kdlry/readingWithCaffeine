@@ -6,8 +6,6 @@ const Form = (props) => {
     libraryInput,
     handleFormSubmit,
     handleRadiusSelected,
-    modeOfTransportation,
-    handleTransportationChange,
     showSuggestions,
     autoComplete,
     handleLibraryInputSelected
@@ -89,14 +87,6 @@ const Form = (props) => {
 
         
       </form>
-      <div>
-        <label htmlFor="modeOfTransportation">Choose a mode of transportation:</label>
-        <select id="modeOfTransportation" value={modeOfTransportation} onChange={handleTransportationChange}>
-          <option value="fastest">Drive</option>
-          <option value="pedestrian">Walk</option>
-          <option value="bicycle">Bike</option>
-        </select>
-      </div>
     </>
   );
 };

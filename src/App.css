@@ -9,11 +9,85 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
 
-/* ----------------------------------- LAYOUT */
+/* GENERAL STYLES  */
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 1.6rem;
+    color: #3a3a3a;
+}
+
+h1,
+h2,
+p,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+ol {
+    list-style: none;
+}
+
+a {
+    color: #ffe1f9;
+}
+
 .wrapper {
-  max-width: 1400px;
-  width: 80%;
-  margin: 0 auto;
+    width: 85%;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1 {
+    font-family: 'Maitree', serif;
+    font-size: clamp(5.5rem, 6vw, 10rem);
+    width: 300px;
+    color: #fff;
+    text-shadow: 3px 2px 1px #b20062;
+    padding: 20px;
+}
+
+header {
+    height: 80vh;
+    display: flex;
+    align-items: flex-end;
+    background-image: linear-gradient(to bottom,rgba(255, 225, 249, .1), rgba(10, 10, 10, .2)), url('./assets/thomas-park-unsplash.png'); 
+    /* background-image: url('./assets/thomas-park-unsplash.png'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 100px;
+}
+
+.caffeine {
+    display: block;
+}
+
+.animate__bounceIn {
+    animation-duration: 2s;
+}
+
+/* Instructions section ----------------------- */
+.instructionsSection {
+    margin: 50px 0;
+}
+
+.instructionsSection h2 {
+    padding-bottom: 15px;
+}
+
+.instructionsSection p:not(:last-child) {
+    padding-bottom: 10px;
 }
 
 /* ----------------------------------- FORM */
@@ -159,3 +233,67 @@ form button:focus {
   background-color: #350482;
   border-color: #b20061;
 }
+
+/* Transportations and directions ----------------------- */
+.transportationAndDirections {
+    margin: 50px 0;
+}
+
+.transportation {
+    margin-bottom: 25px;
+}
+
+ol li:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+
+/* FOOTER STYLES */
+
+footer {
+    color: #fff;
+    background-color: #350482;
+    padding: 25px 0px;
+}
+
+footer p {
+    font-size: clamp(1.4rem, 1.4vw, 1.5rem);
+    text-transform: uppercase;
+}
+
+.footerFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.creators {
+    font-weight: bold;
+    width: 60%;
+}
+
+.photoCredit {
+    width: 40%;
+    text-align: right;
+}
+
+
+@media (max-width: 500px) {
+    .footerFlex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .creators {
+        padding-bottom: 15px;
+    }
+
+    .creators,
+    .photoCredit {
+        width: 100%;
+        text-align: center;
+    } 
+}
+
+
+
+
