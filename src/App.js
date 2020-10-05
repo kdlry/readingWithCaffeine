@@ -244,8 +244,6 @@ class App extends Component {
   getDirections = () => {
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const { selectedLibrary, selectedCoffeeShop, modeOfTransportation } = this.state;
-
-    // const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
     
     axios({
       url: 'http://www.mapquestapi.com/directions/v2/route',
@@ -306,23 +304,7 @@ class App extends Component {
           handleLibraryInputSelected={handleLibraryInputSelected}
         />
         </div>
-        {/* <ul>
-          {showSuggestions === true &&
-            autoComplete.map((results) => {
-              return (
-                <li className='autoCompleteResults'>
-                  <button
-                    type='button'
-                    key={results.id}
-                    onClick={handleLibraryInputSelected}
-                    value={results.name}
-                  >
-                    {results.name}
-                  </button>
-                </li>
-              );
-            })}
-        </ul> */}
+        
         <img src={displayedMap} alt=""/>
         <CoffeeShopsList
           handleCoffeeShopSelected={handleCoffeeShopSelected}

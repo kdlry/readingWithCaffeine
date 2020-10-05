@@ -15,9 +15,9 @@ const Form = (props) => {
   return (
     <>
       <form action='submit'>
-        <div className="inputLocationContainer">
-          <label htmlFor='inputLocation'>Start Location</label>
-          <div className="inputLocationResultsContainer">
+        <div className="formTopSection">
+          <label htmlFor='inputLocation'>Find Library</label>
+          <div className="inputLocationContainer">
             <input
               type='text'
               id='inputLocation'
@@ -45,17 +45,15 @@ const Form = (props) => {
                     </li>
                   );
                 })
-
               }
-            
             </ul>
           }
           </div>
         </div>
 
-        <div className="selectedRadiusContainer">
+        <div className="formBottomSection">
           <p>Radius <span>(km)</span></p>
-          <div className="selectedRadiusInputContainer">
+          <div className="selectedRadiusContainer">
             <input
               type='radio'
               value={5000}
@@ -68,7 +66,7 @@ const Form = (props) => {
             <label htmlFor='radius5km'>5</label>
           </div>
 
-          <div className="selectedRadiusInputContainer">
+          <div className="selectedRadiusContainer">
             <input
               type='radio'
               value={20000}
@@ -81,7 +79,7 @@ const Form = (props) => {
           </div>
 
           <div>
-          <button className='' type='submit' onClick={handleFormSubmit}>
+          <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>
             Go
           </button>
         </div>

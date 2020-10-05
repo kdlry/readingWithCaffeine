@@ -29,18 +29,24 @@ form button:focus {
   cursor: pointer;
 }
 
-/* ----------------------------------- FORM > INPUT LOCATION CONTAINER  */
-.inputLocationContainer {
+/* ----------------------------------- FORM > TOP SECTION */
+.formTopSection {
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   align-items: center;
 }
 
-.inputLocationContainer label {
+.formTopSection label {
   margin-right: 40px;
   text-transform: uppercase;
   width: 20%;
   text-align: right;
+}
+
+/* ----------------------------------- FORM > TOP SECTION > INPUT LOCATION CONTAINER  */
+.inputLocationContainer {
+  position: relative;
+  width: 58%;
 }
 
 .inputLocation {
@@ -48,11 +54,11 @@ form button:focus {
   padding: 5px;
 }
 
-.inputLocationResultsContainer {
-  position: relative;
-  width: 58%;
+.inputLocation:focus {
+  outline-color: #b20061;
 }
 
+/* ----------------------------------- FORM > TOP SECTION > INPUT LOCATION CONTAINER > AUTOCOMPLETE */
 .inputLocationAutoComplete {
   position: absolute;
   margin: 0;
@@ -84,37 +90,34 @@ form button:focus {
   background-color: #350482;
 }
 
-/* ----------------------------------- FORM > SELECTED RADIUS CONTAINER  */
-.selectedRadiusContainer {
+/* ----------------------------------- FORM > BOTTOM SECTION  */
+.formBottomSection {
   display: flex;
 }
 
-.selectedRadiusContainer > *:not(:last-child) {
+.formBottomSection > *:not(:last-child) {
   margin-right: 40px;
 }
 
-.selectedRadiusContainer p {
+.formBottomSection p {
   text-transform: uppercase;
   width: 20%;
   text-align: right;
 }
 
-.selectedRadiusContainer span {
+.formBottomSection span {
   text-transform: none;
 }
 
-.selectedRadiusInputContainer {
+/* ----------------------------------- FORM > BOTTOM SECTION > SELECTED RADIUS CONTAINER  */
+.selectedRadiusContainer {
   position: relative;
   padding: 10px;
   width: 50px;
   border: 2px solid transparent;
 }
 
-.selectedRadiusInputContainer input {
-  /* margin-right: 40px; */
-}
-
-.selectedRadiusInputContainer label {
+.selectedRadiusContainer label {
   position: absolute;
   bottom: -10px;
   left: -10px;
@@ -123,7 +126,7 @@ form button:focus {
   border: 2px solid transparent;
 }
 
-.selectedRadiusInputContainer label::after {
+.selectedRadiusContainer label::after {
   content: '';
   padding: 10px;
   border: 2px solid #b20061;
@@ -134,11 +137,12 @@ form button:focus {
   left: 8px
 }
 
-.selectedRadiusInputContainer input:checked + label::after {
+.selectedRadiusContainer input:checked + label::after {
   background-color: #350482;
 }
 
-form button[type='submit'] {
+/* ----------------------------------- FORM > BOTTOM SECTION > SUBMIT BUTTON  */
+.formSubmitButton {
   height: 60px;
   width: 60px;
   border-radius: 50%;
@@ -150,8 +154,8 @@ form button[type='submit'] {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-form button[type='submit']:hover,
-form button[type='submit']:focus {
+.formSubmitButton:hover,
+.formSubmitButton:focus {
   background-color: #350482;
   border-color: #b20061;
 }
