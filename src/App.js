@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import Header from './Header';
+import Instructions from './Instructions';
 import Form from './Form';
 import CoffeeShopsList from './CoffeeShopsList';
 import Directions from './Directions';
@@ -244,18 +245,20 @@ class App extends Component {
         showSuggestions,
         displayedMap,
         coffeeShops,
+        selectedCoffeeShop,
+        modeOfTransportation,
         directionsToCoffeeShop,
       },
     } = this;
     return (
       <div className='App'>
         <Header />
+        <Instructions />
         <Form
           libraryInput={libraryInput}
           handleLibraryInputChange={handleLibraryInputChange}
           handleFormSubmit={handleFormSubmit}
           handleRadiusSelected={handleRadiusSelected}
-          handleTransportationChange={handleTransportationChange}
         />
         <ul>
           {showSuggestions === true &&
@@ -280,6 +283,9 @@ class App extends Component {
           coffeeShops={coffeeShops} />
 
         <Directions
+          selectedCoffeeShop={selectedCoffeeShop}
+          modeOfTransportation={modeOfTransportation}
+          handleTransportationChange={handleTransportationChange}
           directionsToCoffeeShop={directionsToCoffeeShop}
         />
         <Footer />

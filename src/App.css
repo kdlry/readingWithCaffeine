@@ -15,11 +15,20 @@ html {
 
 body {
     font-family: 'Montserrat', sans-serif; 
+    font-size: 1.6rem;
+    color: #3a3a3a;
 }
 
 h1,
-p {
-    margin: 0px;
+h2,
+p,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+ol {
+    list-style: none;
 }
 
 a {
@@ -29,7 +38,7 @@ a {
 .wrapper {
     width: 85%;
     max-width: 1150px;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 img {
@@ -67,6 +76,31 @@ header {
     animation-duration: 2s;
 }
 
+/* Instructions section ----------------------- */
+.instructionsSection {
+    margin: 50px 0;
+}
+
+.instructionsSection h2 {
+    padding-bottom: 15px;
+}
+
+.instructionsSection p:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+/* Transportations and directions ----------------------- */
+.transportationAndDirections {
+    margin: 50px 0;
+}
+
+.transportation {
+    margin-bottom: 25px;
+}
+
+ol li:not(:last-child) {
+    padding-bottom: 10px;
+}
 
 
 /* FOOTER STYLES */
@@ -94,7 +128,6 @@ footer p {
 
 .photoCredit {
     width: 40%;
-    /* padding-left: 20px; */
     text-align: right;
 }
 
@@ -113,5 +146,9 @@ footer p {
     .photoCredit {
         width: 100%;
         text-align: center;
-    }
+    } 
 }
+
+
+
+
