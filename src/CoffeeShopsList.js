@@ -6,21 +6,24 @@ const CoffeeShopsList = (props) => {
     return (
         <>
             <div className="coffeeShops">
-                <ul>
-                    {coffeeShops.map((results) => {
-                        return (
-                            <li className=''>
-                                <button
-                                    type='button'
-                                    key={results.id}
-                                    onClick={handleCoffeeShopSelected}
-                                    value={results.id}>
-                                    {results.displayString}
-                                </button>
+                <h2>Coffee Shops:</h2>
+                <ul className="coffeeShopsContainer">
+                    {
+                        coffeeShops.map((results) => {
+                            return (
+                                <li key={results.id}>
+                                    <button
+                                        type='button'
+                                        key={results.id}
+                                        onClick={handleCoffeeShopSelected}
+                                        value={results.id}>
+                                        {results.displayString}
+                                    </button>
 
-                            </li>
-                        );
-                    })}
+                                </li>
+                            );
+                        })
+                    }
                 </ul>
             </div>
 
