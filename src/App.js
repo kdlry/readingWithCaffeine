@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 import './App.css';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -51,7 +53,7 @@ class App extends Component {
         }).then((res) => {
           console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
-        });
+        })
       } else if (libraryInput.length < 3) {
         this.setState({ showSuggestions: false });
       }
@@ -147,7 +149,15 @@ class App extends Component {
         this.setState({ displayedMap: mapWithoutRoute });
 
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        Swal.fire({
+          title: 'No results',
+          text: 'Try another keyword.',
+          icon: 'warning',
+          confirmButtonText: 'Okay.',
+        });
+      });
   };
 
   handleCoffeeShopSelected = (event) => {
