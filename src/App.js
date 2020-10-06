@@ -100,17 +100,37 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
-      this.setState({
-        selectedLibrary: {
-          name: this.state.autoComplete[0].name,
-          latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
-          longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
-        },
-        showSuggestions: false,
-      }, this.getCoffeeShops)
+    this.state.autoComplete.length == 0 ?
 
-      : this.getCoffeeShops();
+      Swal.fire({
+        title: 'No results',
+        text: 'Try another keyword.',
+        icon: 'warning',
+        confirmButtonText: 'Okay.',
+      })
+
+
+      :
+
+      this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
+
+
+
+        this.setState({
+          selectedLibrary: {
+            name: this.state.autoComplete[0].name,
+            latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
+            longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
+          },
+          showSuggestions: false,
+        }, this.getCoffeeShops)
+
+
+
+        : this.getCoffeeShops();
+
+
+
 
   };
 
