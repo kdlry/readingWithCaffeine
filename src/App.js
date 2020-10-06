@@ -23,7 +23,8 @@ class App extends Component {
       displayedMap: '',
       directionsToCoffeeShop: [],
       modeOfTransportation: 'fastest',
-      directionsSessionID: ''
+      directionsSessionID: '',
+      isLoading: 'true',
     };
   }
 
@@ -79,10 +80,6 @@ class App extends Component {
       longitude: userSelectedLibraryLongitude,
     };
 
-    // grab name + store name in input field
-    // grab the L&L + store for the next API call
-    // create toggle to close autocomplete box
-
     this.setState(
       {
         selectedLibrary,
@@ -115,19 +112,33 @@ class App extends Component {
     })
       .then((response) => {
         const returnedCoffeeShops = response.data.results;
-        const randomCoffeeShops = [];
-        console.log(returnedCoffeeShops);
-        // randomize all numbers
-        // use for counter to just push 10 shops
-        for (let i = 0; i < 10; i++) {
-          const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
-          randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        
+        // creating a copy of the array to randomize and reduce to 10
+        let randomCoffeeShops = [...returnedCoffeeShops]
+
+        // standard fisher-yates randomizer to randomize entire array and prevent duplicates
+        for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
+          const compareIndex = Math.floor(Math.random() * (i+1));
+          let temp = randomCoffeeShops[i];
+          randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
+          randomCoffeeShops[compareIndex] = temp;
         }
+
+        // to reduce array to 10 shops -- removing everything from index 10 and beyond
+        randomCoffeeShops.splice(10);
+        console.log(randomCoffeeShops);
+        
+        // grab the first ten shops out of the array
+        // for (let i = 0; i < 10; i++) {
+        //   const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
+        //   randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        // }
 
         this.setState({ coffeeShops: randomCoffeeShops });
         console.log(this.state.coffeeShops);
       })
       .then(() => {
+
         const radiusDistance = this.state.selectedRadius / 1000;
 
         const coffeeShopCoords = this.state.coffeeShops.map(
@@ -144,8 +155,15 @@ class App extends Component {
 
         const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
-        this.setState({ displayedMap: mapWithoutRoute });
-
+        this.setState({
+          displayedMap: mapWithoutRoute,
+        }, () => {
+          setTimeout( ()=> {this.setState({
+            // changes the isLoading state -- when the images are ready, will load in the render
+            isLoading: false,
+          })
+        }, 1000)
+        })
       })
       .catch((error) => console.log(error));
   };
@@ -346,25 +364,32 @@ class App extends Component {
               );
             })}
         </ul> */}
-          <div className="mapAndCoffeeShopContainer">
-            <div className="map">
-              <img src={displayedMap} alt="" />
-            </div>
-            <CoffeeShopsList
-              handleCoffeeShopSelected={handleCoffeeShopSelected}
-              coffeeShops={coffeeShops} />
-          </div>
+          { this.state.coffeeShops.length > 0 ? 
+         <>
+            <div className="mapAndCoffeeShopContainer">
+            
+              <div className="map">
+                { this.state.isLoading ? <div className="loadingSpinner"></div> : 
+                <img src={displayedMap} alt="" /> } 
+              </div> 
 
-          <Directions
-            selectedCoffeeShop={selectedCoffeeShop}
-            modeOfTransportation={modeOfTransportation}
-            handleTransportationChange={handleTransportationChange}
-            directionsToCoffeeShop={directionsToCoffeeShop}
-          />
+              <CoffeeShopsList
+                handleCoffeeShopSelected={handleCoffeeShopSelected}
+                coffeeShops={coffeeShops} />
+            </div>
+
+              <Directions
+                selectedCoffeeShop={selectedCoffeeShop}
+                modeOfTransportation={modeOfTransportation}
+                handleTransportationChange={handleTransportationChange}
+                directionsToCoffeeShop={directionsToCoffeeShop}
+              />
+         </>
+        : null }
+       
         </div>
         <Footer />
-
-      </div>
+    </div>
     );
   }
 }
