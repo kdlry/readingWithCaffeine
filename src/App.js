@@ -23,7 +23,8 @@ class App extends Component {
       displayedMap: '',
       directionsToCoffeeShop: [],
       modeOfTransportation: 'fastest',
-      directionsSessionID: ''
+      directionsSessionID: '',
+      isLoading: 'true',
     };
   }
 
@@ -137,6 +138,7 @@ class App extends Component {
         console.log(this.state.coffeeShops);
       })
       .then(() => {
+
         const radiusDistance = this.state.selectedRadius / 1000;
 
         const coffeeShopCoords = this.state.coffeeShops.map(
@@ -153,8 +155,10 @@ class App extends Component {
 
         const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
-        this.setState({ displayedMap: mapWithoutRoute });
-
+        this.setState({
+          displayedMap: mapWithoutRoute, 
+          // changes the isLoading state -- when the images are ready, will load in the render
+          isLoading: false });
       })
       .catch((error) => console.log(error));
   };
@@ -370,7 +374,7 @@ class App extends Component {
             handleTransportationChange={handleTransportationChange}
             directionsToCoffeeShop={directionsToCoffeeShop}
           />
-          
+
         </div>
         <Footer />
 
