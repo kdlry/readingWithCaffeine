@@ -11,7 +11,7 @@ const CoffeeShopsList = (props) => {
 
 
                     <>
-                        <h2>Coffee Shop Direction:</h2>
+                        <h2>Coffee Shop:</h2>
                         <ul className="coffeeShopsContainer">
                             {
                                 coffeeShops.map((results) => {
@@ -40,7 +40,7 @@ const CoffeeShopsList = (props) => {
                             <select className="coffeeShopsDropdown" id='coffeeShops'>
                                 {coffeeShops.map((results) => {
                                     return (
-                                        <option className="coffeeShopsDropdown" value={results.id}
+                                        <option key={results.id} className="coffeeShopsDropdown" value={results.id}
                                             onClick={handleCoffeeShopSelected}>
                                             {results.displayString}
                                         </option>

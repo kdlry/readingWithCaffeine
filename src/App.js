@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 import './App.css';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -25,6 +27,7 @@ class App extends Component {
       modeOfTransportation: 'fastest',
       directionsSessionID: '',
       coffeeShopclicked: false,
+      isLoading: 'true',
     };
   }
 
@@ -34,7 +37,7 @@ class App extends Component {
       this.setState({ showSuggestions: true });
     }
     const libraryInput = event.target.value;
-    console.log(libraryInput);
+    // console.log(libraryInput);
 
     // this.setState(stateToSet, callBackOnce-StateToSet-isComplete)
     this.setState({ libraryInput }, () => {
@@ -50,9 +53,9 @@ class App extends Component {
             key: apiKey,
           },
         }).then((res) => {
-          console.log(res.data.results);
+          // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
-        });
+        })
       } else if (libraryInput.length < 3) {
         this.setState({ showSuggestions: false });
       }
@@ -80,10 +83,6 @@ class App extends Component {
       longitude: userSelectedLibraryLongitude,
     };
 
-    // grab name + store name in input field
-    // grab the L&L + store for the next API call
-    // create toggle to close autocomplete box
-
     this.setState(
       {
         selectedLibrary,
@@ -101,6 +100,21 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
+    this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
+      this.setState({
+        selectedLibrary: {
+          name: this.state.autoComplete[0].name,
+          latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
+          longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
+        },
+        showSuggestions: false,
+      }, this.getCoffeeShops)
+
+      : this.getCoffeeShops();
+
+  };
+
+  getCoffeeShops = () => {
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
 
@@ -116,19 +130,33 @@ class App extends Component {
     })
       .then((response) => {
         const returnedCoffeeShops = response.data.results;
-        const randomCoffeeShops = [];
-        console.log(returnedCoffeeShops);
-        // randomize all numbers
-        // use for counter to just push 10 shops
-        for (let i = 0; i < 10; i++) {
-          const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
-          randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+
+        // creating a copy of the array to randomize and reduce to 10
+        let randomCoffeeShops = [...returnedCoffeeShops]
+
+        // standard fisher-yates randomizer to randomize entire array and prevent duplicates
+        for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
+          const compareIndex = Math.floor(Math.random() * (i + 1));
+          let temp = randomCoffeeShops[i];
+          randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
+          randomCoffeeShops[compareIndex] = temp;
         }
+
+        // to reduce array to 10 shops -- removing everything from index 10 and beyond
+        randomCoffeeShops.splice(10);
+        console.log(randomCoffeeShops);
+
+        // grab the first ten shops out of the array
+        // for (let i = 0; i < 10; i++) {
+        //   const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
+        //   randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        // }
 
         this.setState({ coffeeShops: randomCoffeeShops });
         console.log(this.state.coffeeShops);
       })
       .then(() => {
+
         const radiusDistance = this.state.selectedRadius / 1000;
 
         const coffeeShopCoords = this.state.coffeeShops.map(
@@ -145,14 +173,31 @@ class App extends Component {
 
         const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
-        this.setState({ displayedMap: mapWithoutRoute });
-
+        this.setState({
+          displayedMap: mapWithoutRoute,
+        }, () => {
+          setTimeout(() => {
+            this.setState({
+              // changes the isLoading state -- when the images are ready, will load in the render
+              isLoading: false,
+            })
+          }, 1000)
+        })
       })
-      .catch((error) => console.log(error));
-  };
+      .catch((error) => {
+        console.log(error)
+        Swal.fire({
+          title: 'No results',
+          text: 'Try another keyword.',
+          icon: 'warning',
+          confirmButtonText: 'Okay.',
+        });
+      });
+  }
+
 
   handleCoffeeShopSelected = (event) => {
-    console.log(event)
+    // console.log(event)
     const userSelectedCoffeeShop = event.target.value;
 
 
@@ -175,112 +220,56 @@ class App extends Component {
     const coffeeShopclicked = !this.state.coffeeShopclicked
 
 
-    this.setState(
-      {
-        selectedCoffeeShop,
-        directionsSessionID: '',
-        coffeeShopclicked,
-      },
-      () => {
+    this.setState({
+      selectedCoffeeShop,
+      directionsSessionID: '',
+      coffeeShopclicked,
+    },
+      // after setting the selectedCoffeeShop in state completes,
+      // call this.getSelectedTransportation to populate the results of the directions (map and list of directions)
+      this.getSelectedTransportation
+    );
 
-        const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
-
-
-        // const mapWithRoute =
-        // this.state.directionsSessionID === '' ?
-        // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-        // :
-        // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-
-        const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
-        axios({
-          url: directionsWithRoute
-        }).then(results => {
-          console.log(results);
-          const directions = results.data.route.legs[0].maneuvers;
-
-          const directionsToCoffeeShop = directions.map(direction => {
-            return direction.narrative;
-          })
-
-          const directionsSessionID = results.data.route.sessionId;
-          this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-
-            const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-            this.setState({ displayedMap: mapWithRoute });
-          })
-
-        })
-
-      }
-    )
   }
 
   getSelectedTransportation = () => {
 
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+    const { selectedLibrary, selectedCoffeeShop, modeOfTransportation } = this.state;
 
-
-    // const mapWithRoute =
-    // this.state.directionsSessionID === '' ?
-    // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-    // :
-    // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-
-    const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
+    // make api request to get the directions from the selectedLibrary to the selectedCoffeeShop
     axios({
-      url: directionsWithRoute
+      url: 'http://www.mapquestapi.com/directions/v2/route',
+      params: {
+        key: apiKey,
+        from: `${selectedLibrary.latitude},${selectedLibrary.longitude}`,
+        to: `${selectedCoffeeShop.latitude},${selectedCoffeeShop.longitude}`,
+        routeType: modeOfTransportation,
+        scalebar: 'true|bottom',
+        size: '600,600',
+        type: 'light',
+      }
     }).then(results => {
       console.log(results);
+      // store directions array from results
       const directions = results.data.route.legs[0].maneuvers;
 
+      // map over directions array to get the narrative text of each direction
       const directionsToCoffeeShop = directions.map(direction => {
         return direction.narrative;
       })
 
+      // store the sessionId of the api call to use for the map of directions
       const directionsSessionID = results.data.route.sessionId;
-      this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
 
-        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+      // update state with the directionsToCoffeeShop, and the directionsSessionID
+      this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
+        // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call
+        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc`;
         this.setState({ displayedMap: mapWithRoute });
       })
 
     })
-
-    // const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
-
-    // // const mapWithRoute =
-    // //     `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-    // const mapWithRoute =
-    // //       this.state.directionsSessionID === '' ?
-    //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-    // //         :
-    // //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-    // const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
-    // axios({
-    //   url: directionsWithRoute
-    // }).then(results => {
-    //   console.log(results);
-    //   const directions = results.data.route.legs[0].maneuvers;
-
-    //   const directionsToCoffeeShop = directions.map(direction => {
-    //     return direction.narrative;
-    //   })
-    //   const directionsSessionID = results.data.route.sessionId;
-    //   this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-
-    //   })
-    //   this.setState({ displayedMap: mapWithRoute });
-
-    // })
-
 
   }
 
@@ -350,30 +339,48 @@ class App extends Component {
               );
             })}
         </ul> */}
-          <div className="mapAndCoffeeShopContainer">
-            <div className="map">
-              <img src={displayedMap} alt="" />
-            </div>
-            <CoffeeShopsList
-              handleCoffeeShopSelected={handleCoffeeShopSelected}
-              coffeeShops={coffeeShops}
-              coffeeShopclicked={coffeeShopclicked}
-              selectedCoffeeShop={selectedCoffeeShop}
-              modeOfTransportation={modeOfTransportation}
-              handleTransportationChange={handleTransportationChange}
-              directionsToCoffeeShop={directionsToCoffeeShop} />
-          </div>
+          {this.state.coffeeShops.length > 0 ?
+            <>
+              <div className="mapAndCoffeeShopContainer">
 
-          {/* <Directions
+                <div className="map">
+                  {this.state.isLoading ? <div className="loadingSpinner"></div> :
+                    <img src={displayedMap} alt="" />}
+                </div>
+
+                {/* <CoffeeShopsList
+                  handleCoffeeShopSelected={handleCoffeeShopSelected}
+                  coffeeShops={coffeeShops} /> */}
+                {/* </div> */}
+                <CoffeeShopsList
+                  handleCoffeeShopSelected={handleCoffeeShopSelected}
+                  coffeeShops={coffeeShops}
+                  coffeeShopclicked={coffeeShopclicked}
+                  selectedCoffeeShop={selectedCoffeeShop}
+                  modeOfTransportation={modeOfTransportation}
+                  handleTransportationChange={handleTransportationChange}
+                  directionsToCoffeeShop={directionsToCoffeeShop} />
+              </div>
+
+              {/* <Directions
             selectedCoffeeShop={selectedCoffeeShop}
             modeOfTransportation={modeOfTransportation}
             handleTransportationChange={handleTransportationChange}
             directionsToCoffeeShop={directionsToCoffeeShop}
           /> */}
-        </div>
-        <Footer />
 
-      </div>
+              {/* // <Directions
+              //   selectedCoffeeShop={selectedCoffeeShop}
+              //   modeOfTransportation={modeOfTransportation}
+              //   handleTransportationChange={handleTransportationChange}
+              //   directionsToCoffeeShop={directionsToCoffeeShop}
+              // /> */}
+            </>
+            : null}
+
+        </div >
+        <Footer />
+      </div >
     );
   }
 }
