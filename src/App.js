@@ -156,9 +156,14 @@ class App extends Component {
         const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
         this.setState({
-          displayedMap: mapWithoutRoute, 
-          // changes the isLoading state -- when the images are ready, will load in the render
-          isLoading: false });
+          displayedMap: mapWithoutRoute,
+        }, () => {
+          setTimeout( ()=> {this.setState({
+            // changes the isLoading state -- when the images are ready, will load in the render
+            isLoading: false,
+          })
+        }, 1000)
+        })
       })
       .catch((error) => console.log(error));
   };
@@ -359,26 +364,32 @@ class App extends Component {
               );
             })}
         </ul> */}
-          <div className="mapAndCoffeeShopContainer">
-            <div className="map">
-              <img src={displayedMap} alt="" />
+          { this.state.coffeeShops.length > 0 ? 
+         <>
+            <div className="mapAndCoffeeShopContainer">
+            
+              <div className="map">
+                { this.state.isLoading ? <div className="loadingSpinner"></div> : 
+                <img src={displayedMap} alt="" /> } 
+              </div> 
+
+              <CoffeeShopsList
+                handleCoffeeShopSelected={handleCoffeeShopSelected}
+                coffeeShops={coffeeShops} />
             </div>
-            <CoffeeShopsList
-              handleCoffeeShopSelected={handleCoffeeShopSelected}
-              coffeeShops={coffeeShops} />
-          </div>
 
-          <Directions
-            selectedCoffeeShop={selectedCoffeeShop}
-            modeOfTransportation={modeOfTransportation}
-            handleTransportationChange={handleTransportationChange}
-            directionsToCoffeeShop={directionsToCoffeeShop}
-          />
-
+              <Directions
+                selectedCoffeeShop={selectedCoffeeShop}
+                modeOfTransportation={modeOfTransportation}
+                handleTransportationChange={handleTransportationChange}
+                directionsToCoffeeShop={directionsToCoffeeShop}
+              />
+         </>
+        : null }
+       
         </div>
         <Footer />
-
-      </div>
+    </div>
     );
   }
 }
