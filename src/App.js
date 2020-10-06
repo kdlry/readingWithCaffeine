@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 import './App.css';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -52,7 +54,7 @@ class App extends Component {
         }).then((res) => {
           // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
-        });
+        })
       } else if (libraryInput.length < 3) {
         this.setState({ showSuggestions: false });
       }
@@ -97,6 +99,21 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
+    this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ? 
+      this.setState({
+        selectedLibrary: {
+          name: this.state.autoComplete[0].name,
+          latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
+          longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
+        }, 
+        showSuggestions: false,
+      }, this.getCoffeeShops)
+
+    : this.getCoffeeShops();
+
+  };
+
+  getCoffeeShops = () => {
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
 
@@ -165,8 +182,17 @@ class App extends Component {
         }, 1000)
         })
       })
-      .catch((error) => console.log(error));
-  };
+      .catch((error) => {
+        console.log(error)
+        Swal.fire({
+          title: 'No results',
+          text: 'Try another keyword.',
+          icon: 'warning',
+          confirmButtonText: 'Okay.',
+        });
+      });
+  }
+  
 
   handleCoffeeShopSelected = (event) => {
     // console.log(event)
