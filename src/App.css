@@ -258,7 +258,15 @@ form button:focus {
     min-height: 100%;
 }
 
-
+/* loading spinner in the event API map call is delayed */
+.loadingSpinner {
+  border: 20px solid #ffe1f9;
+  border-top: 20px solid #350482;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  animation: spin 2s linear infinite; 
+}
 
 .coffeeShops {
     width: 45%;

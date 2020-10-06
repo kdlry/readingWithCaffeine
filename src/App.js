@@ -370,6 +370,7 @@ class App extends Component {
             handleTransportationChange={handleTransportationChange}
             directionsToCoffeeShop={directionsToCoffeeShop}
           />
+          
         </div>
         <Footer />
 
