@@ -8,7 +8,8 @@ const Form = (props) => {
     handleRadiusSelected,
     showSuggestions,
     autoComplete,
-    handleLibraryInputSelected
+    handleLibraryInputSelected,
+    selectedRadius,
   } = props;
   return (
     <>
@@ -50,8 +51,21 @@ const Form = (props) => {
         </div>
 
         <div className="formBottomSection">
-          <p>Radius <span>(km)</span></p>
-          <div className="selectedRadiusContainer">
+          {/* <p>Radius <span>(km)</span></p> */}
+          <label htmlFor='inputRadius'>Maximum distance (up to 20km)</label>
+          <input
+            type='number'
+            id='inputRadius'
+            className='inputLocation'
+            min='0'
+            max='20'
+            value={selectedRadius}
+            onChange={handleRadiusSelected}
+            placeholder=''
+            autoComplete="off"
+          />
+
+          {/* <div className="selectedRadiusContainer">
             <input
               type='radio'
               value={5000}
@@ -72,9 +86,9 @@ const Form = (props) => {
               name='selectedRadius'
               onChange={handleRadiusSelected}
               className='sr-only'
-            />
-            <label htmlFor='radius20km'>20</label>
-          </div>
+            /> */}
+          {/* <label htmlFor='radius20km'>20</label> */}
+          {/* </div> */}
 
           <div>
             <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>

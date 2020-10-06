@@ -3,15 +3,15 @@ import Directions from "./Directions"
 
 const CoffeeShopsList = (props) => {
 
-    const { coffeeShops, handleCoffeeShopSelected, coffeeShopclicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop } = props
+    const { coffeeShops, handleCoffeeShopSelected, coffeeShopClicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop, handleBackButton } = props
     return (
         <>
             <div className="coffeeShops">
-                <>{!coffeeShopclicked ?
+                <>{!coffeeShopClicked ?
 
 
                     <>
-                        <h2>Coffee Shop:</h2>
+                        <h2>Coffee Shops:</h2>
                         <ul className="coffeeShopsContainer">
                             {
                                 coffeeShops.map((results) => {
@@ -36,7 +36,8 @@ const CoffeeShopsList = (props) => {
 
 
                         <div className='transportation'>
-                            <label htmlFor='coffeeShops'>Select another Coffee Shop:</label>
+                            <button onClick={handleBackButton}>View All Coffee Shops</button>
+                            {/* <label htmlFor='coffeeShops'>Select another Coffee Shop:</label>
                             <select className="coffeeShopsDropdown" id='coffeeShops'>
                                 {coffeeShops.map((results) => {
                                     return (
@@ -46,7 +47,7 @@ const CoffeeShopsList = (props) => {
                                         </option>
                                     );
                                 })}
-                            </select>
+                            </select> */}
                         </div>
 
 

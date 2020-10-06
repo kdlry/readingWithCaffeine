@@ -237,6 +237,7 @@ form button:focus {
     justify-content: space-around;
     background-color: rgb(225, 221, 221);
     /* background-color:  #ffe1f9; */
+    min-height: 600px;
     padding: 10px;
 }
 
@@ -259,6 +260,14 @@ form button:focus {
 }
 
 /* loading spinner in the event API map call is delayed */
+
+.spinnerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .loadingSpinner {
   border: 20px solid #ffe1f9;
   border-top: 20px solid #350482;

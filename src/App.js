@@ -18,7 +18,7 @@ class App extends Component {
       autoComplete: [], // results from the prediction text
       selectedLibrary: {}, // to grab value of library // pop in here
       showSuggestions: false,
-      selectedRadius: 5000,
+      selectedRadius: 5,
       coffeeShops: [],
       distanceBetween: '',
       selectedCoffeeShop: '',
@@ -26,18 +26,16 @@ class App extends Component {
       directionsToCoffeeShop: [],
       modeOfTransportation: 'fastest',
       directionsSessionID: '',
-      coffeeShopclicked: false,
+      coffeeShopClicked: false,
       isLoading: 'true',
     };
   }
 
   handleLibraryInputChange = (event) => {
-    // console.log(event);
     if (!this.state.showSuggestions) {
       this.setState({ showSuggestions: true });
     }
     const libraryInput = event.target.value;
-    // console.log(libraryInput);
 
     // this.setState(stateToSet, callBackOnce-StateToSet-isComplete)
     this.setState({ libraryInput }, () => {
@@ -53,7 +51,6 @@ class App extends Component {
             key: apiKey,
           },
         }).then((res) => {
-          // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
         })
       } else if (libraryInput.length < 3) {
@@ -70,7 +67,6 @@ class App extends Component {
       (item) => item.name === userSelectedLibrary
     );
 
-    // console.log(finalLibrary);
     const userSelectedLibraryLatitude =
       finalLibrary[0].place.geometry.coordinates[1];
     const userSelectedLibraryLongitude =
@@ -100,7 +96,7 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    this.state.autoComplete.length == 0 ?
+    this.state.autoComplete.length === 0 ?
 
       Swal.fire({
         title: 'No results',
@@ -109,12 +105,9 @@ class App extends Component {
         confirmButtonText: 'Okay.',
       })
 
-
       :
 
       this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
-
-
 
         this.setState({
           selectedLibrary: {
@@ -125,15 +118,10 @@ class App extends Component {
           showSuggestions: false,
         }, this.getCoffeeShops)
 
-
-
         : this.getCoffeeShops();
-
-
-
-
   };
 
+  // getting coffee shops in the list
   getCoffeeShops = () => {
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
@@ -142,7 +130,7 @@ class App extends Component {
       url: urlSearch,
       params: {
         key: apiKey,
-        circle: `${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius}`,
+        circle: `${this.state.selectedLibrary.longitude},${this.state.selectedLibrary.latitude},${this.state.selectedRadius * 1000}`,
         sort: 'relevance',
         q: 'Coffee Shop',
         pageSize: 50,
@@ -164,46 +152,10 @@ class App extends Component {
 
         // to reduce array to 10 shops -- removing everything from index 10 and beyond
         randomCoffeeShops.splice(10);
-        console.log(randomCoffeeShops);
-
-        // grab the first ten shops out of the array
-        // for (let i = 0; i < 10; i++) {
-        //   const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
-        //   randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
-        // }
 
         this.setState({ coffeeShops: randomCoffeeShops });
-        console.log(this.state.coffeeShops);
       })
-      .then(() => {
-
-        const radiusDistance = this.state.selectedRadius / 1000;
-
-        const coffeeShopCoords = this.state.coffeeShops.map(
-          (coffeeShop, index) => {
-            // console.log(coffeeShop.place.geometry.coordinates);
-            const [long, lat] = coffeeShop.place.geometry.coordinates;
-            // return coffeeShop.place.geometry.coordinates;
-            return `${lat},${long}|marker-md-${index + 1}|`;
-            // 43.653427,-79.380764|marker-md-2||43.650378,-79.380355|
-          }
-        );
-
-        const joinedCoffeeShopCoords = coffeeShopCoords.join('|');
-
-        const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
-
-        this.setState({
-          displayedMap: mapWithoutRoute,
-        }, () => {
-          setTimeout(() => {
-            this.setState({
-              // changes the isLoading state -- when the images are ready, will load in the render
-              isLoading: false,
-            })
-          }, 1000)
-        })
-      })
+      .then(this.displayCoffeeShops)
       .catch((error) => {
         console.log(error)
         Swal.fire({
@@ -215,17 +167,48 @@ class App extends Component {
       });
   }
 
+  displayCoffeeShops = () => {
+    const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+    const radiusDistance = this.state.selectedRadius;
+
+    const coffeeShopCoords = this.state.coffeeShops.map(
+      (coffeeShop, index) => {
+        const [long, lat] = coffeeShop.place.geometry.coordinates;
+        // return coffeeShop.place.geometry.coordinates;
+        return `${lat},${long}|marker-md-${index + 1}|`;
+        // 43.653427,-79.380764|marker-md-2||43.650378,-79.380355|
+      }
+    );
+
+    const joinedCoffeeShopCoords = coffeeShopCoords.join('|');
+
+    const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
+
+    this.setState({
+      displayedMap: mapWithoutRoute,
+      coffeeShopClicked: false,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          // changes the isLoading state -- when the images are ready, will load in the render
+          isLoading: false,
+        })
+      }, 1200)
+    })
+  }
+
+  handleBackButton = () => {
+    this.displayCoffeeShops();
+  }
+
 
   handleCoffeeShopSelected = (event) => {
-    // console.log(event)
     const userSelectedCoffeeShop = event.target.value;
-
 
     const finalCoffeeShop = this.state.coffeeShops.filter(
       (item) => item.id === userSelectedCoffeeShop
     );
 
-    // console.log(finalLibrary);
     const userSelectedCoffeeShopLatitude =
       finalCoffeeShop[0].place.geometry.coordinates[1];
     const userSelectedCoffeeShopLongitude =
@@ -237,13 +220,12 @@ class App extends Component {
       latitude: userSelectedCoffeeShopLatitude,
       longitude: userSelectedCoffeeShopLongitude,
     }
-    const coffeeShopclicked = !this.state.coffeeShopclicked
-
+    const coffeeShopClicked = !this.state.coffeeShopClicked
 
     this.setState({
       selectedCoffeeShop,
       directionsSessionID: '',
-      coffeeShopclicked,
+      coffeeShopClicked,
     },
       // after setting the selectedCoffeeShop in state completes,
       // call this.getSelectedTransportation to populate the results of the directions (map and list of directions)
@@ -288,7 +270,6 @@ class App extends Component {
         const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc`;
         this.setState({ displayedMap: mapWithRoute });
       })
-
     })
 
   }
@@ -315,6 +296,7 @@ class App extends Component {
       handleRadiusSelected,
       handleCoffeeShopSelected,
       handleTransportationChange,
+      handleBackButton,
       state: {
         libraryInput,
         autoComplete,
@@ -324,7 +306,8 @@ class App extends Component {
         selectedCoffeeShop,
         modeOfTransportation,
         directionsToCoffeeShop,
-        coffeeShopclicked,
+        coffeeShopClicked,
+        selectedRadius,
       },
     } = this;
     return (
@@ -341,60 +324,29 @@ class App extends Component {
             showSuggestions={showSuggestions}
             autoComplete={autoComplete}
             handleLibraryInputSelected={handleLibraryInputSelected}
+            selectedRadius={selectedRadius}
           />
-          {/* <ul>
-          {showSuggestions === true &&
-            autoComplete.map((results) => {
-              return (
-                <li className='autoCompleteResults'>
-                  <button
-                    type='button'
-                    key={results.id}
-                    onClick={handleLibraryInputSelected}
-                    value={results.name}
-                  >
-                    {results.name}
-                  </button>
-                </li>
-              );
-            })}
-        </ul> */}
+
           {this.state.coffeeShops.length > 0 ?
             <>
               <div className="mapAndCoffeeShopContainer">
 
                 <div className="map">
-                  {this.state.isLoading ? <div className="loadingSpinner"></div> :
+                  {this.state.isLoading ? <div className="spinnerContainer"><div className="loadingSpinner"></div></div> :
                     <img src={displayedMap} alt="" />}
                 </div>
 
-                {/* <CoffeeShopsList
-                  handleCoffeeShopSelected={handleCoffeeShopSelected}
-                  coffeeShops={coffeeShops} /> */}
-                {/* </div> */}
                 <CoffeeShopsList
                   handleCoffeeShopSelected={handleCoffeeShopSelected}
                   coffeeShops={coffeeShops}
-                  coffeeShopclicked={coffeeShopclicked}
+                  coffeeShopClicked={coffeeShopClicked}
                   selectedCoffeeShop={selectedCoffeeShop}
                   modeOfTransportation={modeOfTransportation}
                   handleTransportationChange={handleTransportationChange}
-                  directionsToCoffeeShop={directionsToCoffeeShop} />
+                  directionsToCoffeeShop={directionsToCoffeeShop}
+                  handleBackButton={handleBackButton} />
               </div>
 
-              {/* <Directions
-            selectedCoffeeShop={selectedCoffeeShop}
-            modeOfTransportation={modeOfTransportation}
-            handleTransportationChange={handleTransportationChange}
-            directionsToCoffeeShop={directionsToCoffeeShop}
-          /> */}
-
-              {/* // <Directions
-              //   selectedCoffeeShop={selectedCoffeeShop}
-              //   modeOfTransportation={modeOfTransportation}
-              //   handleTransportationChange={handleTransportationChange}
-              //   directionsToCoffeeShop={directionsToCoffeeShop}
-              // /> */}
             </>
             : null}
 
