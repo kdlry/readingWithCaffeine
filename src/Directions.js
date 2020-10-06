@@ -2,36 +2,36 @@ import React from 'react';
 
 const Directions = (props) => {
 
-    const { 
+    const {
         selectedCoffeeShop,
-        modeOfTransportation, 
-        handleTransportationChange, 
-        directionsToCoffeeShop 
+        modeOfTransportation,
+        handleTransportationChange,
+        directionsToCoffeeShop
     } = props;
 
     return (
         <div className='transportationAndDirections'>
             {selectedCoffeeShop !== '' && (
-            <>     
-                <div className='transportation'>
-                    <label htmlFor='modeOfTransportation'>Choose a mode of transportation:</label>
-                    <select id='modeOfTransportation' value={modeOfTransportation} onChange={handleTransportationChange}>
-                        <option value='fastest'>Drive</option>
-                        <option value='pedestrian'>Walk</option>
-                        <option value='bicycle'>Bike</option>
-                    </select>
-                </div>
+                <>
+                    <div className='transportation'>
+                        <label htmlFor='modeOfTransportation'>Choose a mode of transportation:</label>
+                        <select id='modeOfTransportation' value={modeOfTransportation} onChange={handleTransportationChange}>
+                            <option value='fastest'>Drive</option>
+                            <option value='pedestrian'>Walk</option>
+                            <option value='bicycle'>Bike</option>
+                        </select>
+                    </div>
 
-                <ol>
-                    {directionsToCoffeeShop.map((direction) => {
-                        return (
-                            <li>
-                                {direction}
-                            </li>
-                        );
-                    })}
-                </ol>
-            </>    
+                    <ol>
+                        {directionsToCoffeeShop.map((direction, index) => {
+                            return (
+                                <li key={index}>
+                                    {direction}
+                                </li>
+                            );
+                        })}
+                    </ol>
+                </>
             )}
         </div>
     )

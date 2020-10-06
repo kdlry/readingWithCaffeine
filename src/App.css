@@ -241,7 +241,7 @@ form button:focus {
 }
 
 
-/* map------------------------------------------- */
+/* MAP------------------------------------------- */
 .map {
     width: 50%;
     background-color: black;
@@ -268,21 +268,27 @@ form button:focus {
   animation: spin 2s linear infinite; 
 }
 
+
 @keyframes spin {
   0% {transform: rotate(0deg);}
   100% {transform: rotate(360deg);}
 }
-
+/* COFFEE SHOPS -------------------------------------------  */
 .coffeeShops {
     width: 45%;
     margin-left: 10px;
     display: flex;
+    flex-direction: column;
+}
+.coffeeShops h2 {
+  height: 10%;
 }
 
 .coffeeShops ul {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    height: 90%;
 }
 
 
@@ -291,6 +297,7 @@ form button:focus {
     margin: 0;
     padding: 0;
     min-height: 100%;
+    max-height: 50px;
     background-color: gray;
     color: white;
     font-weight: 600;
@@ -328,6 +335,9 @@ form button:focus {
 .coffeeShops li:nth-child(9),
 .coffeeShops li:nth-child(10){
     margin-bottom: 0px;
+}
+.coffeeShopsDropdown{
+  width: 80%;
 }
 
 /* Transportations and directions ----------------------- */

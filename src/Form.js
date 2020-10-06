@@ -26,26 +26,26 @@ const Form = (props) => {
               autoComplete="off"
             />
             {
-            showSuggestions &&
-            <ul className="inputLocationAutoComplete">
-              {
-                autoComplete.map((results) => {
-                  return (
-                    <li className='autoCompleteResults'>
-                      <button
-                        type='button'
-                        key={results.id}
-                        onClick={handleLibraryInputSelected}
-                        value={results.name}
-                      >
-                        {results.name}
-                      </button>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-          }
+              showSuggestions &&
+              <ul className="inputLocationAutoComplete">
+                {
+                  autoComplete.map((results) => {
+                    return (
+                      <li key={results.id} className='autoCompleteResults'>
+                        <button
+                          type='button'
+                          key={results.id}
+                          onClick={handleLibraryInputSelected}
+                          value={results.name}
+                        >
+                          {results.name}
+                        </button>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            }
           </div>
         </div>
 
@@ -77,15 +77,15 @@ const Form = (props) => {
           </div>
 
           <div>
-          <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>
-            Go
+            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>
+              Go
           </button>
-        </div>
-          
+          </div>
+
         </div>
 
 
-        
+
       </form>
     </>
   );

@@ -26,6 +26,7 @@ class App extends Component {
       directionsToCoffeeShop: [],
       modeOfTransportation: 'fastest',
       directionsSessionID: '',
+      coffeeShopclicked: false,
       isLoading: 'true',
     };
   }
@@ -99,17 +100,37 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ? 
-      this.setState({
-        selectedLibrary: {
-          name: this.state.autoComplete[0].name,
-          latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
-          longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
-        }, 
-        showSuggestions: false,
-      }, this.getCoffeeShops)
+    this.state.autoComplete.length == 0 ?
 
-    : this.getCoffeeShops();
+      Swal.fire({
+        title: 'No results',
+        text: 'Try another keyword.',
+        icon: 'warning',
+        confirmButtonText: 'Okay.',
+      })
+
+
+      :
+
+      this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
+
+
+
+        this.setState({
+          selectedLibrary: {
+            name: this.state.autoComplete[0].name,
+            latitude: this.state.autoComplete[0].place.geometry.coordinates[1],
+            longitude: this.state.autoComplete[0].place.geometry.coordinates[0],
+          },
+          showSuggestions: false,
+        }, this.getCoffeeShops)
+
+
+
+        : this.getCoffeeShops();
+
+
+
 
   };
 
@@ -129,13 +150,13 @@ class App extends Component {
     })
       .then((response) => {
         const returnedCoffeeShops = response.data.results;
-        
+
         // creating a copy of the array to randomize and reduce to 10
         let randomCoffeeShops = [...returnedCoffeeShops]
 
         // standard fisher-yates randomizer to randomize entire array and prevent duplicates
         for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
-          const compareIndex = Math.floor(Math.random() * (i+1));
+          const compareIndex = Math.floor(Math.random() * (i + 1));
           let temp = randomCoffeeShops[i];
           randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
           randomCoffeeShops[compareIndex] = temp;
@@ -144,7 +165,7 @@ class App extends Component {
         // to reduce array to 10 shops -- removing everything from index 10 and beyond
         randomCoffeeShops.splice(10);
         console.log(randomCoffeeShops);
-        
+
         // grab the first ten shops out of the array
         // for (let i = 0; i < 10; i++) {
         //   const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
@@ -175,11 +196,12 @@ class App extends Component {
         this.setState({
           displayedMap: mapWithoutRoute,
         }, () => {
-          setTimeout( ()=> {this.setState({
-            // changes the isLoading state -- when the images are ready, will load in the render
-            isLoading: false,
-          })
-        }, 1000)
+          setTimeout(() => {
+            this.setState({
+              // changes the isLoading state -- when the images are ready, will load in the render
+              isLoading: false,
+            })
+          }, 1000)
         })
       })
       .catch((error) => {
@@ -192,7 +214,7 @@ class App extends Component {
         });
       });
   }
-  
+
 
   handleCoffeeShopSelected = (event) => {
     // console.log(event)
@@ -215,17 +237,19 @@ class App extends Component {
       latitude: userSelectedCoffeeShopLatitude,
       longitude: userSelectedCoffeeShopLongitude,
     }
+    const coffeeShopclicked = !this.state.coffeeShopclicked
 
 
     this.setState({
-        selectedCoffeeShop,
-        // directionsSessionID: ''
-      },
+      selectedCoffeeShop,
+      directionsSessionID: '',
+      coffeeShopclicked,
+    },
       // after setting the selectedCoffeeShop in state completes,
       // call this.getSelectedTransportation to populate the results of the directions (map and list of directions)
       this.getSelectedTransportation
     );
-  
+
   }
 
   getSelectedTransportation = () => {
@@ -260,11 +284,11 @@ class App extends Component {
 
       // update state with the directionsToCoffeeShop, and the directionsSessionID
       this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-        // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call 
+        // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call
         const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc`;
         this.setState({ displayedMap: mapWithRoute });
       })
-      
+
     })
 
   }
@@ -300,6 +324,7 @@ class App extends Component {
         selectedCoffeeShop,
         modeOfTransportation,
         directionsToCoffeeShop,
+        coffeeShopclicked,
       },
     } = this;
     return (
@@ -334,32 +359,48 @@ class App extends Component {
               );
             })}
         </ul> */}
-          { this.state.coffeeShops.length > 0 ? 
-         <>
-            <div className="mapAndCoffeeShopContainer">
-            
-              <div className="map">
-                { this.state.isLoading ? <div className="loadingSpinner"></div> : 
-                <img src={displayedMap} alt="" /> } 
-              </div> 
+          {this.state.coffeeShops.length > 0 ?
+            <>
+              <div className="mapAndCoffeeShopContainer">
 
-              <CoffeeShopsList
-                handleCoffeeShopSelected={handleCoffeeShopSelected}
-                coffeeShops={coffeeShops} />
-            </div>
+                <div className="map">
+                  {this.state.isLoading ? <div className="loadingSpinner"></div> :
+                    <img src={displayedMap} alt="" />}
+                </div>
 
-              <Directions
-                selectedCoffeeShop={selectedCoffeeShop}
-                modeOfTransportation={modeOfTransportation}
-                handleTransportationChange={handleTransportationChange}
-                directionsToCoffeeShop={directionsToCoffeeShop}
-              />
-         </>
-        : null }
-       
-        </div>
+                {/* <CoffeeShopsList
+                  handleCoffeeShopSelected={handleCoffeeShopSelected}
+                  coffeeShops={coffeeShops} /> */}
+                {/* </div> */}
+                <CoffeeShopsList
+                  handleCoffeeShopSelected={handleCoffeeShopSelected}
+                  coffeeShops={coffeeShops}
+                  coffeeShopclicked={coffeeShopclicked}
+                  selectedCoffeeShop={selectedCoffeeShop}
+                  modeOfTransportation={modeOfTransportation}
+                  handleTransportationChange={handleTransportationChange}
+                  directionsToCoffeeShop={directionsToCoffeeShop} />
+              </div>
+
+              {/* <Directions
+            selectedCoffeeShop={selectedCoffeeShop}
+            modeOfTransportation={modeOfTransportation}
+            handleTransportationChange={handleTransportationChange}
+            directionsToCoffeeShop={directionsToCoffeeShop}
+          /> */}
+
+              {/* // <Directions
+              //   selectedCoffeeShop={selectedCoffeeShop}
+              //   modeOfTransportation={modeOfTransportation}
+              //   handleTransportationChange={handleTransportationChange}
+              //   directionsToCoffeeShop={directionsToCoffeeShop}
+              // /> */}
+            </>
+            : null}
+
+        </div >
         <Footer />
-    </div>
+      </div >
     );
   }
 }
