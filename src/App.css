@@ -106,7 +106,8 @@ form button:focus {
   align-items: center;
 }
 
-.formTopSection label {
+.formTopSection label,
+.formBottomSection label {
   margin-right: 40px;
   text-transform: uppercase;
   width: 20%;

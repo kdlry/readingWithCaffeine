@@ -96,11 +96,11 @@ class App extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    this.state.autoComplete.length === 0 ?
+    this.state.autoComplete.length === 0 || this.state.selectedRadius < 1 || this.state.selectedRadius > 20 ?
 
       Swal.fire({
         title: 'No results',
-        text: 'Try another keyword.',
+        text: 'Try another search',
         icon: 'warning',
         confirmButtonText: 'Okay.',
       })

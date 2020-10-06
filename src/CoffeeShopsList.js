@@ -11,7 +11,7 @@ const CoffeeShopsList = (props) => {
 
 
                     <>
-                        <h2>Coffee Shops:</h2>
+                        <h2>Coffee Shops</h2>
                         <ul className="coffeeShopsContainer">
                             {
                                 coffeeShops.map((results) => {
@@ -51,7 +51,7 @@ const CoffeeShopsList = (props) => {
                         </div>
 
 
-                        <h2>Coffee Shops:</h2>
+                        <h2>Directions</h2>
                         <Directions
                             selectedCoffeeShop={selectedCoffeeShop}
                             modeOfTransportation={modeOfTransportation}

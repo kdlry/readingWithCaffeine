@@ -52,7 +52,10 @@ const Form = (props) => {
 
         <div className="formBottomSection">
           {/* <p>Radius <span>(km)</span></p> */}
-          <label htmlFor='inputRadius'>Maximum distance (up to 20km)</label>
+          <label htmlFor='inputRadius'>Maximum distance (1-20km)</label>
+
+
+
           <input
             type='number'
             id='inputRadius'
@@ -63,6 +66,7 @@ const Form = (props) => {
             onChange={handleRadiusSelected}
             placeholder=''
             autoComplete="off"
+            required
           />
 
           {/* <div className="selectedRadiusContainer">
