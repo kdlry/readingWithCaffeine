@@ -322,6 +322,9 @@ form button:focus {
 .coffeeShops li:nth-child(10){
     margin-bottom: 0px;
 }
+.coffeeShopsDropdown{
+  width: 80%;
+}
 
 /* Transportations and directions ----------------------- */
 .transportationAndDirections {
