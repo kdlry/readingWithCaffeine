@@ -79,10 +79,6 @@ class App extends Component {
       longitude: userSelectedLibraryLongitude,
     };
 
-    // grab name + store name in input field
-    // grab the L&L + store for the next API call
-    // create toggle to close autocomplete box
-
     this.setState(
       {
         selectedLibrary,
@@ -115,14 +111,27 @@ class App extends Component {
     })
       .then((response) => {
         const returnedCoffeeShops = response.data.results;
-        const randomCoffeeShops = [];
-        console.log(returnedCoffeeShops);
-        // randomize all numbers
-        // use for counter to just push 10 shops
-        for (let i = 0; i < 10; i++) {
-          const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
-          randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        
+        // creating a copy of the array to randomize and reduce to 10
+        let randomCoffeeShops = [...returnedCoffeeShops]
+
+        // standard fisher-yates randomizer to randomize entire array and prevent duplicates
+        for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
+          const compareIndex = Math.floor(Math.random() * (i+1));
+          let temp = randomCoffeeShops[i];
+          randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
+          randomCoffeeShops[compareIndex] = temp;
         }
+
+        // to reduce array to 10 shops -- removing everything from index 10 and beyond
+        randomCoffeeShops.splice(10);
+        console.log(randomCoffeeShops);
+        
+        // grab the first ten shops out of the array
+        // for (let i = 0; i < 10; i++) {
+        //   const randomCoffeeShopIndex = Math.floor(Math.random() * returnedCoffeeShops.length);
+        //   randomCoffeeShops.push(returnedCoffeeShops[randomCoffeeShopIndex]);
+        // }
 
         this.setState({ coffeeShops: randomCoffeeShops });
         console.log(this.state.coffeeShops);
