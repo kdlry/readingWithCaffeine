@@ -33,7 +33,7 @@ class App extends Component {
       this.setState({ showSuggestions: true });
     }
     const libraryInput = event.target.value;
-    console.log(libraryInput);
+    // console.log(libraryInput);
 
     // this.setState(stateToSet, callBackOnce-StateToSet-isComplete)
     this.setState({ libraryInput }, () => {
@@ -49,7 +49,7 @@ class App extends Component {
             key: apiKey,
           },
         }).then((res) => {
-          console.log(res.data.results);
+          // console.log(res.data.results);
           this.setState({ autoComplete: [...res.data.results] });
         });
       } else if (libraryInput.length < 3) {
@@ -151,7 +151,7 @@ class App extends Component {
   };
 
   handleCoffeeShopSelected = (event) => {
-    console.log(event)
+    // console.log(event)
     const userSelectedCoffeeShop = event.target.value;
 
 
@@ -173,111 +173,55 @@ class App extends Component {
     }
 
 
-    this.setState(
-      {
+    this.setState({
         selectedCoffeeShop,
-        directionsSessionID: ''
+        // directionsSessionID: ''
       },
-      () => {
-
-        const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
-
-
-        // const mapWithRoute =
-          // this.state.directionsSessionID === '' ?
-            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-            // :
-            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-
-        const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
-        axios({
-          url: directionsWithRoute
-        }).then(results => {
-          console.log(results);
-          const directions = results.data.route.legs[0].maneuvers;
-
-          const directionsToCoffeeShop = directions.map(direction => {
-            return direction.narrative;
-          })
-
-          const directionsSessionID = results.data.route.sessionId;
-          this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-
-            const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-            this.setState({ displayedMap: mapWithRoute });
-          })
-          
-        })
-        
-      }
-    )
+      // after setting the selectedCoffeeShop in state completes,
+      // call this.getSelectedTransportation to populate the results of the directions (map and list of directions)
+      this.getSelectedTransportation
+    );
+  
   }
 
   getSelectedTransportation = () => {
 
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
+    const { selectedLibrary, selectedCoffeeShop, modeOfTransportation } = this.state;
 
+    // make api request to get the directions from the selectedLibrary to the selectedCoffeeShop
+    axios({
+      url: 'http://www.mapquestapi.com/directions/v2/route',
+      params: {
+        key: apiKey,
+        from: `${selectedLibrary.latitude},${selectedLibrary.longitude}`,
+        to: `${selectedCoffeeShop.latitude},${selectedCoffeeShop.longitude}`,
+        routeType: modeOfTransportation,
+        scalebar: 'true|bottom',
+        size: '600,600',
+        type: 'light',
+      }
+    }).then(results => {
+      console.log(results);
+      // store directions array from results
+      const directions = results.data.route.legs[0].maneuvers;
 
-        // const mapWithRoute =
-          // this.state.directionsSessionID === '' ?
-            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-            // :
-            // `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
+      // map over directions array to get the narrative text of each direction
+      const directionsToCoffeeShop = directions.map(direction => {
+        return direction.narrative;
+      })
 
+      // store the sessionId of the api call to use for the map of directions
+      const directionsSessionID = results.data.route.sessionId;
 
-        const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
-        axios({
-          url: directionsWithRoute
-        }).then(results => {
-          console.log(results);
-          const directions = results.data.route.legs[0].maneuvers;
-
-          const directionsToCoffeeShop = directions.map(direction => {
-            return direction.narrative;
-          })
-
-          const directionsSessionID = results.data.route.sessionId;
-          this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-
-            const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-            this.setState({ displayedMap: mapWithRoute });
-          })
-          
-        })
-
-    // const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
-
-    // // const mapWithRoute =
-    // //     `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-    // const mapWithRoute =
-    // //       this.state.directionsSessionID === '' ?
-    //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&start=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&end=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&traffic=flow|cons|inc`
-    // //         :
-    // //         `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc&session=${this.state.directionsSessionID}`;
-
-    // const directionsWithRoute = `http://www.mapquestapi.com/directions/v2/route?key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&from=${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}&to=${this.state.selectedCoffeeShop.latitude},${this.state.selectedCoffeeShop.longitude}&routeType=${this.state.modeOfTransportation}`
-
-    // axios({
-    //   url: directionsWithRoute
-    // }).then(results => {
-    //   console.log(results);
-    //   const directions = results.data.route.legs[0].maneuvers;
-
-    //   const directionsToCoffeeShop = directions.map(direction => {
-    //     return direction.narrative;
-    //   })
-    //   const directionsSessionID = results.data.route.sessionId;
-    //   this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-
-    //   })
-    //   this.setState({ displayedMap: mapWithRoute });
+      // update state with the directionsToCoffeeShop, and the directionsSessionID
+      this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
+        // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call 
+        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc`;
+        this.setState({ displayedMap: mapWithRoute });
+      })
       
-    // })
-
+    })
 
   }
 
