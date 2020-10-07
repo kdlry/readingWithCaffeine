@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/readingWithCaffeine/static/css/main.a9176e11.chunk.css",
-    "main.js": "/readingWithCaffeine/static/js/main.8f0c4575.chunk.js",
-    "main.js.map": "/readingWithCaffeine/static/js/main.8f0c4575.chunk.js.map",
+    "main.css": "/readingWithCaffeine/static/css/main.62fb47c3.chunk.css",
+    "main.js": "/readingWithCaffeine/static/js/main.42f166f4.chunk.js",
+    "main.js.map": "/readingWithCaffeine/static/js/main.42f166f4.chunk.js.map",
     "runtime-main.js": "/readingWithCaffeine/static/js/runtime-main.00093b2b.js",
     "runtime-main.js.map": "/readingWithCaffeine/static/js/runtime-main.00093b2b.js.map",
     "static/js/2.500e5cd2.chunk.js": "/readingWithCaffeine/static/js/2.500e5cd2.chunk.js",
     "static/js/2.500e5cd2.chunk.js.map": "/readingWithCaffeine/static/js/2.500e5cd2.chunk.js.map",
     "index.html": "/readingWithCaffeine/index.html",
-    "precache-manifest.5c896a9a4f1f3530d112a4496324e06b.js": "/readingWithCaffeine/precache-manifest.5c896a9a4f1f3530d112a4496324e06b.js",
+    "precache-manifest.20fe5660e18f74ebc7257ec41133cfb6.js": "/readingWithCaffeine/precache-manifest.20fe5660e18f74ebc7257ec41133cfb6.js",
     "service-worker.js": "/readingWithCaffeine/service-worker.js",
-    "static/css/main.a9176e11.chunk.css.map": "/readingWithCaffeine/static/css/main.a9176e11.chunk.css.map",
+    "static/css/main.62fb47c3.chunk.css.map": "/readingWithCaffeine/static/css/main.62fb47c3.chunk.css.map",
     "static/js/2.500e5cd2.chunk.js.LICENSE.txt": "/readingWithCaffeine/static/js/2.500e5cd2.chunk.js.LICENSE.txt",
     "static/media/App.css": "/readingWithCaffeine/static/media/thomas-park-unsplash.ff474788.png"
   },
   "entrypoints": [
     "static/js/runtime-main.00093b2b.js",
     "static/js/2.500e5cd2.chunk.js",
-    "static/css/main.a9176e11.chunk.css",
-    "static/js/main.8f0c4575.chunk.js"
+    "static/css/main.62fb47c3.chunk.css",
+    "static/js/main.42f166f4.chunk.js"
   ]
 }
