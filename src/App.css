@@ -24,7 +24,7 @@ li {
     padding: 0;
 }
 
-ol,ul,li {
+ul {
     list-style: none;
 }
 
@@ -70,9 +70,15 @@ header {
 }
 
 .animate__bounceIn {
-    animation-duration: 2s;
+    animation-duration: 2.5s;
 }
 
+
+
+/* main */
+.mainContainer{ 
+  min-height: 600px;
+}
 /* Instructions section ----------------------- */
 .instructionsSection {
     margin: 50px 0;
@@ -115,8 +121,6 @@ form button:focus {
 }
 
 
-
-
 /* ----------------------------------- FORM > TOP SECTION > INPUT LOCATION CONTAINER  */
 .inputLocationContainer {
   position: relative;
@@ -142,6 +146,8 @@ form button:focus {
   z-index: 100;
   border: 1px solid #350482;
   box-shadow: 0 2px 3px rgba(53, 4, 130, 0.4);
+  overflow: scroll;
+  max-height: 230px;
 }
 
 .autoCompleteResults button {

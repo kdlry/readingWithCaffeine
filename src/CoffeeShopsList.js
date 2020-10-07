@@ -12,7 +12,7 @@ const CoffeeShopsList = (props) => {
 
                     <>
                         <h2>Coffee Shops</h2>
-                        <ul className="coffeeShopsContainer">
+                        <ol className="coffeeShopsContainer">
                             {
                                 coffeeShops.map((results) => {
                                     return (
@@ -28,7 +28,7 @@ const CoffeeShopsList = (props) => {
                                     );
                                 })
                             }
-                        </ul>
+                        </ol>
                     </>
                     :
                     <React.Fragment>
@@ -36,7 +36,7 @@ const CoffeeShopsList = (props) => {
 
 
                         <div className='transportation'>
-                            <button onClick={handleBackButton}>View All Coffee Shops</button>
+                            <button onClick={handleBackButton}><i class="fas fa-chevron-square-left"></i> to Coffee Shops</button>
                             {/* <label htmlFor='coffeeShops'>Select another Coffee Shop:</label>
                             <select className="coffeeShopsDropdown" id='coffeeShops'>
                                 {coffeeShops.map((results) => {

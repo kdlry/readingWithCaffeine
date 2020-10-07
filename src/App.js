@@ -7,7 +7,7 @@ import Header from './Header';
 import Instructions from './Instructions';
 import Form from './Form';
 import CoffeeShopsList from './CoffeeShopsList';
-import Directions from './Directions';
+// import Directions from './Directions';
 import Footer from './Footer';
 
 class App extends Component {
@@ -100,14 +100,14 @@ class App extends Component {
 
       Swal.fire({
         title: 'No results',
-        text: 'Try another search',
+        text: 'Try another search.',
         icon: 'warning',
-        confirmButtonText: 'Okay.',
+        confirmButtonText: 'Okay',
       })
 
       :
 
-      this.state.libraryInput.toLowerCase() == this.state.autoComplete[0].name.toLowerCase() ?
+      this.state.libraryInput.toLowerCase() === this.state.autoComplete[0].name.toLowerCase() ?
 
         this.setState({
           selectedLibrary: {
@@ -139,35 +139,45 @@ class App extends Component {
       .then((response) => {
         const returnedCoffeeShops = response.data.results;
 
-        // creating a copy of the array to randomize and reduce to 10
-        let randomCoffeeShops = [...returnedCoffeeShops]
-
-        // standard fisher-yates randomizer to randomize entire array and prevent duplicates
-        for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
-          const compareIndex = Math.floor(Math.random() * (i + 1));
-          let temp = randomCoffeeShops[i];
-          randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
-          randomCoffeeShops[compareIndex] = temp;
+        if (returnedCoffeeShops.length === 0) {
+          Swal.fire({
+            title: 'No results',
+            text: 'Try another search',
+            icon: 'warning',
+            confirmButtonText: 'Okay.',
+          })
+        } else {
+          // creating a copy of the array to randomize and reduce to 10
+          let randomCoffeeShops = [...returnedCoffeeShops]
+  
+          // standard fisher-yates randomizer to randomize entire array and prevent duplicates
+          for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
+            const compareIndex = Math.floor(Math.random() * (i + 1));
+            let temp = randomCoffeeShops[i];
+            randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
+            randomCoffeeShops[compareIndex] = temp;
+          }
+  
+          // to reduce array to 10 shops -- removing everything from index 10 and beyond
+          randomCoffeeShops.splice(10);
+  
+          this.setState({ coffeeShops: randomCoffeeShops }, this.displayCoffeeShops);
         }
-
-        // to reduce array to 10 shops -- removing everything from index 10 and beyond
-        randomCoffeeShops.splice(10);
-
-        this.setState({ coffeeShops: randomCoffeeShops });
       })
-      .then(this.displayCoffeeShops)
+      // .then(this.displayCoffeeShops)
       .catch((error) => {
         console.log(error)
         Swal.fire({
           title: 'No results',
           text: 'Try another keyword.',
           icon: 'warning',
-          confirmButtonText: 'Okay.',
+          confirmButtonText: 'Okay',
         });
       });
   }
 
   displayCoffeeShops = () => {
+    console.log('display coffees');
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const radiusDistance = this.state.selectedRadius;
 
@@ -313,7 +323,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Header />
-        <div className="wrapper">
+        <main className="wrapper mainContainer">
           <Instructions />
           <Form
             libraryInput={libraryInput}
@@ -350,7 +360,7 @@ class App extends Component {
             </>
             : null}
 
-        </div >
+        </main >
         <Footer />
       </div >
     );
