@@ -176,7 +176,7 @@ class App extends Component {
         }
       })
       // .then(this.displayCoffeeShops)
-      .catch((error) => {
+      .catch(() => {
         Swal.fire({
           title: 'No response',
           text: 'Try searching again later.',
@@ -209,6 +209,10 @@ class App extends Component {
       displayedMap: mapWithoutRoute,
       coffeeShopClicked: false,
     }, () => {
+
+      let mapAndResults = document.querySelector('#mapAndResults');
+      mapAndResults.scrollIntoView();
+
       setTimeout(() => {
         this.setState({
           // changes the isLoading state -- when the images are ready, will load in the render
@@ -349,7 +353,7 @@ class App extends Component {
 
           {this.state.coffeeShops.length > 0 ?
             <>
-              <div className='mapAndCoffeeShopContainer'>
+              <div className='mapAndCoffeeShopContainer' id='mapAndResults'>
 
                 <div className='map'>
                   {this.state.isLoading ? <div className='spinnerContainer'><div className='loadingSpinner'></div></div> :
