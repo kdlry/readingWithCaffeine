@@ -3,7 +3,7 @@ import Directions from "./Directions"
 
 const CoffeeShopsList = (props) => {
 
-    const { coffeeShops, handleCoffeeShopSelected, coffeeShopClicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop, handleBackButton } = props
+    const { coffeeShops, handleCoffeeShopSelected, coffeeShopClicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop, handleBackButton, selectedLibrary } = props
     return (
         <>
             <div className="coffeeShops">
@@ -11,7 +11,8 @@ const CoffeeShopsList = (props) => {
 
 
                     <>
-                        <h2>Coffee Shops</h2>
+                        <h2>Your Library: <span>{selectedLibrary.name}</span></h2>
+                        <h2>Coffee Shops In The Area</h2>
                         <ol className="coffeeShopsContainer">
                             {
                                 coffeeShops.map((results) => {
@@ -32,22 +33,9 @@ const CoffeeShopsList = (props) => {
                     </>
                     :
                     <React.Fragment>
-                        {/* <button>SELECT ANOTHER COFFEE SHOP</button> */}
-
 
                         <div className='transportation'>
-                            <button onClick={handleBackButton}><i class="fas fa-chevron-square-left"></i> to Coffee Shops</button>
-                            {/* <label htmlFor='coffeeShops'>Select another Coffee Shop:</label>
-                            <select className="coffeeShopsDropdown" id='coffeeShops'>
-                                {coffeeShops.map((results) => {
-                                    return (
-                                        <option key={results.id} className="coffeeShopsDropdown" value={results.id}
-                                            onClick={handleCoffeeShopSelected}>
-                                            {results.displayString}
-                                        </option>
-                                    );
-                                })}
-                            </select> */}
+                            <button onClick={handleBackButton}>⬅ to Coffee Shops</button>
                         </div>
 
 

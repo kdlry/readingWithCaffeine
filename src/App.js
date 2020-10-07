@@ -3,12 +3,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 import './App.css';
-import Header from './Header';
-import Instructions from './Instructions';
-import Form from './Form';
-import CoffeeShopsList from './CoffeeShopsList';
+import Header from './components/Header';
+import Instructions from './components/Instructions';
+import Form from './components/Form';
+import CoffeeShopsList from './components/CoffeeShopsList';
 // import Directions from './Directions';
-import Footer from './Footer';
+import Footer from './components/Footer';
 
 class App extends Component {
   constructor() {
@@ -31,7 +31,9 @@ class App extends Component {
     };
   }
 
+  // method to handle library input change
   handleLibraryInputChange = (event) => {
+    // if auto complete list is not showing
     if (!this.state.showSuggestions) {
       this.setState({ showSuggestions: true });
     }
@@ -95,6 +97,15 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log(this.state.libraryInput);
+    this.state.libraryInput.length < 3 ? Swal.fire({
+      title: 'No results',
+      text: 'Library name must be greater than 3 characters.',
+      icon: 'warning',
+      confirmButtonText: 'Okay',
+    })
+
+    :
 
     this.state.autoComplete.length === 0 || this.state.selectedRadius < 1 || this.state.selectedRadius > 20 ?
 
@@ -166,10 +177,9 @@ class App extends Component {
       })
       // .then(this.displayCoffeeShops)
       .catch((error) => {
-        console.log(error)
         Swal.fire({
-          title: 'No results',
-          text: 'Try another keyword.',
+          title: 'No response',
+          text: 'Try searching again later.',
           icon: 'warning',
           confirmButtonText: 'Okay',
         });
@@ -177,7 +187,6 @@ class App extends Component {
   }
 
   displayCoffeeShops = () => {
-    console.log('display coffees');
     const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
     const radiusDistance = this.state.selectedRadius;
 
@@ -192,7 +201,9 @@ class App extends Component {
 
     const joinedCoffeeShopCoords = coffeeShopCoords.join('|');
 
-    const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
+    const libraryMarker = `${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}|marker-md-350482||`;
+
+    const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${libraryMarker}${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
     this.setState({
       displayedMap: mapWithoutRoute,
@@ -262,7 +273,6 @@ class App extends Component {
         type: 'light',
       }
     }).then(results => {
-      console.log(results);
       // store directions array from results
       const directions = results.data.route.legs[0].maneuvers;
 
@@ -281,7 +291,6 @@ class App extends Component {
         this.setState({ displayedMap: mapWithRoute });
       })
     })
-
   }
 
 
@@ -318,12 +327,13 @@ class App extends Component {
         directionsToCoffeeShop,
         coffeeShopClicked,
         selectedRadius,
+        selectedLibrary,
       },
     } = this;
     return (
       <div className='App'>
         <Header />
-        <main className="wrapper mainContainer">
+        <main className='wrapper mainContainer'>
           <Instructions />
           <Form
             libraryInput={libraryInput}
@@ -339,12 +349,12 @@ class App extends Component {
 
           {this.state.coffeeShops.length > 0 ?
             <>
-              <div className="mapAndCoffeeShopContainer">
+              <div className='mapAndCoffeeShopContainer'>
 
-                <div className="map">
-                  {this.state.isLoading ? <div className="spinnerContainer"><div className="loadingSpinner"></div></div> :
-                    <img src={displayedMap} alt="" />}
-                </div>
+                <div className='map'>
+                  {this.state.isLoading ? <div className='spinnerContainer'><div className='loadingSpinner'></div></div> :
+                    <img src={displayedMap} alt='' />}
+              </div>
 
                 <CoffeeShopsList
                   handleCoffeeShopSelected={handleCoffeeShopSelected}
@@ -354,13 +364,15 @@ class App extends Component {
                   modeOfTransportation={modeOfTransportation}
                   handleTransportationChange={handleTransportationChange}
                   directionsToCoffeeShop={directionsToCoffeeShop}
-                  handleBackButton={handleBackButton} />
+                  handleBackButton={handleBackButton} 
+                  selectedLibrary={selectedLibrary}
+                />
               </div>
 
             </>
             : null}
 
-        </main >
+        </main>
         <Footer />
       </div >
     );

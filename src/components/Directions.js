@@ -14,6 +14,14 @@ const Directions = (props) => {
             {selectedCoffeeShop !== '' && (
                 <>
                     <div className='transportation'>
+                        {/* <div className="directionsMarkerImageContainer">
+                            <p>Start</p>
+                            <img src="https://assets.mapquestapi.com/icon/v2/marker-start.png" />
+                        </div>
+                        <div className="directionsMarkerImageContainer">
+                            <p>End</p>
+                            <img src="https://assets.mapquestapi.com/icon/v2/marker-end.png" />
+                        </div> */}
                         <label htmlFor='modeOfTransportation'>Choose a mode of transportation:</label>
                         <select id='modeOfTransportation' value={modeOfTransportation} onChange={handleTransportationChange}>
                             <option value='fastest'>Drive</option>

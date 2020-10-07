@@ -14,9 +14,9 @@ const Form = (props) => {
   return (
     <>
       <form action='submit'>
-        <div className="formTopSection">
+        <div className='formTopSection'>
           <label htmlFor='inputLocation'>Find Library</label>
-          <div className="inputLocationContainer">
+          <div className='inputLocationContainer'>
             <input
               type='text'
               id='inputLocation'
@@ -24,11 +24,11 @@ const Form = (props) => {
               value={libraryInput}
               onChange={handleLibraryInputChange}
               placeholder=''
-              autoComplete="off"
+              autoComplete='off'
             />
             {
               showSuggestions &&
-              <ul className="inputLocationAutoComplete">
+              <ul className='inputLocationAutoComplete'>
                 {
                   autoComplete.map((results) => {
                     return (
@@ -50,11 +50,8 @@ const Form = (props) => {
           </div>
         </div>
 
-        <div className="formBottomSection">
-          {/* <p>Radius <span>(km)</span></p> */}
+        <div className='formBottomSection'>
           <label htmlFor='inputRadius'>Maximum distance (1-20km)</label>
-
-
 
           <input
             type='number'
@@ -65,44 +62,17 @@ const Form = (props) => {
             value={selectedRadius}
             onChange={handleRadiusSelected}
             placeholder=''
-            autoComplete="off"
+            autoComplete='off'
             required
           />
 
-          {/* <div className="selectedRadiusContainer">
-            <input
-              type='radio'
-              value={5000}
-              id='radius5km'
-              name='selectedRadius'
-              className='sr-only'
-              onChange={handleRadiusSelected}
-              defaultChecked
-            />
-            <label htmlFor='radius5km'>5</label>
-          </div>
-
-          <div className="selectedRadiusContainer">
-            <input
-              type='radio'
-              value={20000}
-              id='radius20km'
-              name='selectedRadius'
-              onChange={handleRadiusSelected}
-              className='sr-only'
-            /> */}
-          {/* <label htmlFor='radius20km'>20</label> */}
-          {/* </div> */}
-
           <div>
-            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>
+            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit} >
               Go
           </button>
           </div>
 
         </div>
-
-
 
       </form>
     </>
