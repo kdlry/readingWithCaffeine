@@ -12,7 +12,8 @@ body {
     font-family: 'Montserrat', sans-serif; 
     font-size: 1.6rem;
     color: #3a3a3a;
-    background-color: #ffe1f9;
+    background-color: #f5f5f5;
+    scroll-behavior: smooth;
 }
 
 h1,
@@ -55,7 +56,8 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.9rem, 1.9vw, 2.2rem);
+  font-size: clamp(2rem, 1.9vw, 2.2rem);
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -87,11 +89,13 @@ header {
 
 /* Instructions section ----------------------- */
 .instructionsSection {
-    margin: 50px 0;
+  margin: 50px 0px;
+  padding-bottom: 50px;
+  border-bottom: 3px solid #b20062;
 }
 
 .instructionsSection h2 {
-    padding-bottom: 15px;
+  padding-bottom: 15px;
 }
 
 .instructionsSection p:not(:last-child) {
@@ -103,12 +107,20 @@ form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 30px;
+  padding-bottom: 50px;
 }
 
 form button:hover,
 form button:focus {
   cursor: pointer;
+}
+
+form input {
+  height: 45px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: none;
+  border-bottom: 2px solid #a5a5a5;
 }
 
 /* FORM > TOP SECTION --------------------------- */
@@ -120,13 +132,15 @@ form button:focus {
 
 .formTopSection label,
 .formBottomSection label {
-  margin-right: 40px;
+  font-weight: 700;
   text-transform: uppercase;
-  width: 20%;
+  min-width: 200px;
+  max-width: 200px;
 }
 
 
 /* FORM > TOP SECTION > INPUT LOCATION CONTAINER ---------------------------- */
+
 .inputLocationContainer {
   position: relative;
   width: 58%;
@@ -134,7 +148,6 @@ form button:focus {
 
 .inputLocation {
   width: 100%;
-  padding: 5px;
 }
 
 .inputLocation:focus {
@@ -178,11 +191,16 @@ form button:focus {
 /* FORM > BOTTOM SECTION---------------------------------   */
 .formBottomSection {
   display: flex;
+  align-items: center;
 }
 
-.formBottomSection > *:not(:last-child) {
-  margin-right: 40px;
+.inputRadius {
+  margin-right: 30px;
 }
+
+/* .formBottomSection > *:not(:last-child) {
+  margin-right: 40px;
+} */
 
 .formBottomSection p {
   text-transform: uppercase;
@@ -228,8 +246,8 @@ form button:focus {
 
 /* FORM > BOTTOM SECTION > SUBMIT BUTTON -----------------------------------  */
 .formSubmitButton {
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   background-color: #b20061;
   color: #ffe1f9;

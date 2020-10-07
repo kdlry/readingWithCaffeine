@@ -56,7 +56,7 @@ const Form = (props) => {
           <input
             type='number'
             id='inputRadius'
-            className='inputLocation'
+            className='inputRadius'
             min='0'
             max='20'
             value={selectedRadius}
@@ -67,8 +67,7 @@ const Form = (props) => {
           />
 
           <div>
-            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit} >
-              Go
+            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>Go
           </button>
           </div>
 
