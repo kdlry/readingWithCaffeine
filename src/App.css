@@ -300,11 +300,18 @@ form button:focus {
   height: 10%;
 }
 
-.coffeeShops ul {
+.coffeeShops ol {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     height: 90%;
+}
+
+.coffeeShops li {
+  /* width: 20%; */
+  /* display: flex;
+  flex-wrap: wrap; */
+  height: 20%;
 }
 
 
@@ -317,7 +324,7 @@ form button:focus {
     background-color: gray;
     color: white;
     font-weight: 600;
-    text-align: justify;
+    text-align: left;
     padding: 0 5px;
     border: none;
 }
@@ -333,16 +340,16 @@ form button:focus {
 }
 
 .coffeeShops li {
-    width: calc((100% - 10px)/2);
+    width: calc((100% - 30px)/2);
     min-height: calc((100% - 5 * 4px)/5);
     margin-top: 2px;
     margin-bottom: 2px;
 }
 .coffeeShops li:nth-child(odd) {
-    margin-right: 5px;
+    margin-right: 15px;
 }
 .coffeeShops li:nth-child(even) {
-    margin-left: 5px;
+    margin-left: 15px;
 }
 .coffeeShops li:nth-child(1),
 .coffeeShops li:nth-child(2){
@@ -365,7 +372,7 @@ form button:focus {
     margin-bottom: 25px;
 }
 
-ol li:not(:last-child) {
+.transportation ol li:not(:last-child) {
     padding-bottom: 10px;
 }
 

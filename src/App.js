@@ -43,7 +43,7 @@ class App extends Component {
         const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
 
         axios({
-          url: 'http://www.mapquestapi.com/search/v3/prediction',
+          url: 'https://www.mapquestapi.com/search/v3/prediction',
           // url: 'https://www.mapquestapi.com/search/v4/place',
           params: {
             q: this.state.libraryInput,
@@ -149,7 +149,7 @@ class App extends Component {
         } else {
           // creating a copy of the array to randomize and reduce to 10
           let randomCoffeeShops = [...returnedCoffeeShops]
-  
+
           // standard fisher-yates randomizer to randomize entire array and prevent duplicates
           for (let i = randomCoffeeShops.length - 1; i > 0; i--) {
             const compareIndex = Math.floor(Math.random() * (i + 1));
@@ -157,10 +157,10 @@ class App extends Component {
             randomCoffeeShops[i] = randomCoffeeShops[compareIndex];
             randomCoffeeShops[compareIndex] = temp;
           }
-  
+
           // to reduce array to 10 shops -- removing everything from index 10 and beyond
           randomCoffeeShops.splice(10);
-  
+
           this.setState({ coffeeShops: randomCoffeeShops }, this.displayCoffeeShops);
         }
       })
@@ -251,7 +251,7 @@ class App extends Component {
 
     // make api request to get the directions from the selectedLibrary to the selectedCoffeeShop
     axios({
-      url: 'http://www.mapquestapi.com/directions/v2/route',
+      url: 'https://www.mapquestapi.com/directions/v2/route',
       params: {
         key: apiKey,
         from: `${selectedLibrary.latitude},${selectedLibrary.longitude}`,
