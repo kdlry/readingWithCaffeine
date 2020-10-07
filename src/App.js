@@ -43,7 +43,7 @@ class App extends Component {
         const apiKey = 'rNUBvav2dEGGss4WVvHK64tVGGygn3zB';
 
         axios({
-          url: 'http://www.mapquestapi.com/search/v3/prediction',
+          url: 'https://www.mapquestapi.com/search/v3/prediction',
           // url: 'https://www.mapquestapi.com/search/v4/place',
           params: {
             q: this.state.libraryInput,
@@ -251,7 +251,7 @@ class App extends Component {
 
     // make api request to get the directions from the selectedLibrary to the selectedCoffeeShop
     axios({
-      url: 'http://www.mapquestapi.com/directions/v2/route',
+      url: 'https://www.mapquestapi.com/directions/v2/route',
       params: {
         key: apiKey,
         from: `${selectedLibrary.latitude},${selectedLibrary.longitude}`,

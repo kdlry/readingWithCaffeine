@@ -324,7 +324,7 @@ form button:focus {
     background-color: gray;
     color: white;
     font-weight: 600;
-    text-align: justify;
+    text-align: left;
     padding: 0 5px;
     border: none;
 }
