@@ -73,6 +73,7 @@ img {
 
 h1 {
   font-family: 'Maitree', serif;
+  font-weight: 400;
   font-size: clamp(5.2rem, 6vw, 10rem);
   width: 300px;
   color: #fff;
