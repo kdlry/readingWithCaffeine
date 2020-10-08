@@ -53,4 +53,4 @@ const CoffeeShopsList = (props) => {
     );
 };
 
-export default CoffeeShopsList;n
+export default CoffeeShopsList;
