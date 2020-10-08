@@ -14,15 +14,15 @@ const Directions = (props) => {
 			{selectedCoffeeShop !== '' && (
 				<>
 					<div className='transportation'>
-						<div className='directionMarkers'>
+						<div className='directionMarkers' aria-hidden='true'>
 
 							<div className='directionMarkerContainer'>
-								<img src='https://assets.mapquestapi.com/icon/v2/marker-start.png' />
+								<img src='https://assets.mapquestapi.com/icon/v2/marker-start.png' alt='' />
 								<p>Start</p>
 							</div>
 
 							<div className='directionMarkerContainer'>
-								<img src='https://assets.mapquestapi.com/icon/v2/marker-end.png' />
+								<img src='https://assets.mapquestapi.com/icon/v2/marker-end.png' alt=''/>
 								<p>End</p>
 							</div>
 
@@ -38,7 +38,7 @@ const Directions = (props) => {
 						</div>
 					</div>
 
-					<ol className="directionsToCoffeeShopOl">
+					<ol className='directionsToCoffeeShopOl'>
 						{/* map over directions array to display ordered list of coffee shop directions */}
 						{directionsToCoffeeShop.map((direction, index) => {
 							return (

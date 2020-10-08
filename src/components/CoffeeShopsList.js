@@ -1,8 +1,8 @@
 import React from 'react';
-import Directions from "./Directions"
+import Directions from './Directions'
 
 const CoffeeShopsList = (props) => {
-    const { coffeeShops, handleCoffeeShopSelected, coffeeShopClicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop, handleBackButton, selectedLibrary } = props
+    const { coffeeShops, handleCoffeeShopSelected, coffeeShopClicked, selectedCoffeeShop, modeOfTransportation, handleTransportationChange, directionsToCoffeeShop, handleBackButton } = props
     return (      
       <div className='coffeeShops'>
         {/* ternary operator to display the coffee shops buttons or the directions clicking on an coffee shop button */}
@@ -22,8 +22,8 @@ const CoffeeShopsList = (props) => {
                           onClick={handleCoffeeShopSelected}
                           
                           value={results.id}>
-                            <div className="coffeeShopNumber"><p>{index + 1}</p></div>
-                            <div className="coffeeShopText">
+                            <div className='coffeeShopNumber'><p>{index + 1}</p></div>
+                            <div className='coffeeShopText'>
                               <h3>{results.name}</h3>
                               <p>{results.place.properties.street}</p>
                             </div>
@@ -38,7 +38,7 @@ const CoffeeShopsList = (props) => {
           <>
           {/* display transportation and directions */}
             <div className='transportation'>
-              <button className="transportationButton" onClick={handleBackButton}>⬅ to Coffee Shops</button>
+              <button className='transportationButton' onClick={handleBackButton}>⬅ to Coffee Shops</button>
             </div>
             <h2>Directions</h2>
             <Directions

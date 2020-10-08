@@ -13,7 +13,7 @@ const Form = (props) => {
   } = props;
   return (
     <>
-      <form action='submit'>
+      <form id='form' action='submit'>
         <div className='formTopSection'>
 
           <label htmlFor='inputLocation'>Find Library</label>
@@ -29,8 +29,8 @@ const Form = (props) => {
             />
 
             {/* displaying autocomplete results / event handler on click */}
-            {
-              showSuggestions &&
+            {showSuggestions &&
+            // if showSuggestions is true then display the list of autoCompleteResults
               <ul className='inputLocationAutoComplete'>
                 {
                   autoComplete.map((results) => {
@@ -48,8 +48,7 @@ const Form = (props) => {
                     );
                   })
                 }
-              </ul>
-            }
+              </ul>}
           </div>
         </div>
 

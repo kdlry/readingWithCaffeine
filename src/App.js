@@ -12,20 +12,19 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      libraryInput: '', // to register change of library selection
+      libraryInput: '', // register change of library selection
       autoComplete: [], // results from the prediction text
-      selectedLibrary: {}, // to grab value of library // pop in here
-      showSuggestions: false,
-      selectedRadius: 5,
-      coffeeShops: [],
-      distanceBetween: '',
-      selectedCoffeeShop: '',
-      displayedMap: '',
-      directionsToCoffeeShop: [],
-      modeOfTransportation: 'fastest',
-      directionsSessionID: '',
-      coffeeShopClicked: false,
-      isLoading: 'true',
+      selectedLibrary: {}, // grab value of library // pop in here
+      showSuggestions: false, // detect whether to show the autocomplete results
+      selectedRadius: 5, // grab value on radius input (default is 5 km)
+      coffeeShops: [], // store the random coffee shops
+      selectedCoffeeShop: '', // grab value of coffee shop from list of results
+      displayedMap: '', // grap the image src of the displayed map
+      directionsToCoffeeShop: [], // grab the directions to the selected coffee shop
+      modeOfTransportation: 'fastest', // to set default mode to driving directions 
+      directionsSessionID: '', // store the API directions session ID 
+      coffeeShopClicked: false, // grab directions of the selected coffee shops 
+      isLoading: 'true', // detect whether map is loading for spinner
     };
   }
 
@@ -49,6 +48,7 @@ class App extends Component {
       if (libraryInput.length >= 3 && libraryInput.length < 25) {
         const apiKey = 'dgYN9vqDVgOBOwNtvPlR14jKSxdi9dVa';
 
+        // make axios call to get autoComplete text of the user's input
         axios({
           url: 'https://www.mapquestapi.com/search/v3/prediction',
           params: {
@@ -61,6 +61,7 @@ class App extends Component {
           this.setState({ autoComplete: [...res.data.results] });
         })
         .catch(error => {
+          // if there's an error with the api call display an alert
           Swal.fire({
             title: 'Network Error',
             text: 'Try searching at a later time.',
@@ -162,6 +163,7 @@ class App extends Component {
     const urlSearch = 'https://www.mapquestapi.com/search/v4/place';
 
     // make api call providing selectedLibrary longitude and latitude with query of Coffee Shops
+    // to find the surrounding coffee shops of the selected library
     axios({
       url: urlSearch,
       params: {
@@ -243,7 +245,7 @@ class App extends Component {
       displayedMap: mapWithoutRoute,
       coffeeShopClicked: false,
     }, () => {
-      // once the displayedMap has been updated, smooth scrool to the mapAndResults section
+      // once the displayedMap has been updated, smooth scroll to the mapAndResults section
       let mapAndResults = document.querySelector('#mapAndResults');
       mapAndResults.scrollIntoView();
 
@@ -262,7 +264,7 @@ class App extends Component {
     this.displayCoffeeShops();
   }
 
-  // handle when the user selecteds a coffee shop from the list to get the directions
+  // handle when the user selects a coffee shop from the list to get the directions
   handleCoffeeShopSelected = (event) => {
     // to prevent event bubbling down to the h3/p contained in the button
     // use event.currentTarget to target the button where the onClick event is attached to
@@ -298,20 +300,20 @@ class App extends Component {
       directionsSessionID: '',
       coffeeShopClicked,
     },
-      // after setting the selectedCoffeeShop in state completes,
+      // after the selectedCoffeeShop is set in state,
       // call this.getSelectedTransportation to populate the results of the directions (map and list of directions)
       this.getSelectedTransportation
     );
 
   }
 
-  // handle getting the directions from the selectedLibrary and the selectedCoffeeShop
+  // getting directions from the selectedLibrary to the selectedCoffeeShop
   getSelectedTransportation = () => {
 
     const apiKey = 'dgYN9vqDVgOBOwNtvPlR14jKSxdi9dVa';
     const { selectedLibrary, selectedCoffeeShop, modeOfTransportation } = this.state;
 
-    // make api request to get the directions from the selectedLibrary to the selectedCoffeeShop
+    // api request to grab directions from the selectedLibrary to the selectedCoffeeShop
     axios({
       url: 'https://www.mapquestapi.com/directions/v2/route',
       params: {
@@ -337,7 +339,7 @@ class App extends Component {
 
       // update state with the directionsToCoffeeShop, and the directionsSessionID
       this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
-        // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call
+        // once state has been changed, update mapWithRoute img src to display the visual directions using the sessionID of the directions api call
         const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=500,600&type=light&traffic=flow|cons|inc`;
         this.setState({ displayedMap: mapWithRoute });
       })
@@ -379,11 +381,11 @@ class App extends Component {
         directionsToCoffeeShop,
         coffeeShopClicked,
         selectedRadius,
-        selectedLibrary,
       },
     } = this;
     return (
       <div className='App'>
+        <a href='#form' className='skipLink'>Skip to main</a>
         <Header />
         <main className='mainContainer'>
           <div className='wrapper'>
@@ -408,7 +410,7 @@ class App extends Component {
                   <div className='map'>
                     {/* If state isLoading then display loader...otherise display the map */}
                     {this.state.isLoading ? <div className='spinnerContainer'><div className='loadingSpinner'></div></div> :
-                      <img src={displayedMap} alt='' />}
+                      <img src={displayedMap} alt='map of selected library and coffee shops' />}
                   </div>
 
                   <CoffeeShopsList
@@ -420,7 +422,6 @@ class App extends Component {
                     handleTransportationChange={handleTransportationChange}
                     directionsToCoffeeShop={directionsToCoffeeShop}
                     handleBackButton={handleBackButton} 
-                    selectedLibrary={selectedLibrary}
                   />
                 </div>
               </div>
