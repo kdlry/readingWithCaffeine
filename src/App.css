@@ -3,17 +3,17 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
 
-/* GENERAL STYLES ----------------------- */
+/* General styles -------------------- */
 html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 1.6rem;
-    color: #3a3a3a;
-    background-color: #f5f5f5;
+  font-family: 'Montserrat', sans-serif; 
+  font-size: 1.6rem;
+  color: #3a3a3a;
+  background-color: #f5f5f5;
 }
 
 h1,
@@ -23,36 +23,36 @@ p,
 ol,
 ul,
 li {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    color: #ffe1f9;
+  color: #ffe1f9;
 }
 
 .wrapper {
-    width: 85%;
-    max-width: 1300px;
-    margin: 0 auto;
+  width: 85%;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 h1 {
-    font-family: 'Maitree', serif;
-    font-size: clamp(5.5rem, 6vw, 10rem);
-    width: 300px;
-    color: #fff;
-    text-shadow: 3px 2px 1px #b20062;
+  font-family: 'Maitree', serif;
+  font-size: clamp(5.2rem, 6vw, 10rem);
+  width: 300px;
+  color: #fff;
+  text-shadow: 3px 2px 1px #b20062;
 }
 
 h2 {
@@ -67,35 +67,34 @@ button {
 }
 
 header {
-    height: 80vh;
-    display: flex;
-    align-items: flex-end;
-    background-image: linear-gradient(to bottom,rgba(255, 225, 249, .1), rgba(10, 10, 10, .2)), url('./assets/thomas-park-unsplash.png'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    padding-bottom: 100px;
+  display: flex;
+  align-items: flex-end;
+  background-image: linear-gradient(to bottom,#ffe1f91a, #0a0a0a33), url('./assets/thomas-park-unsplash.png'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 60vh;
+  padding-bottom: 100px;
 }
 
 .caffeine {
-    display: block;
+  display: block;
 }
 
 .animate__bounceIn {
-    animation-duration: 2.5s;
+  animation-duration: 2.5s;
 }
 
 
-
-/* Main section ----------------------- */
-.mainContainer{ 
+/* Main section -------------------- */
+.mainContainer { 
   min-height: 600px;
 }
 
-/* Instructions section ----------------------- */
+/* Instructions section -------------------- */
 .instructionsSection {
-  margin: 50px 0px;
-  padding-bottom: 50px;
+  margin: 70px 0px;
+  padding-bottom: 70px;
   border-bottom: 3px solid #b20062;
 }
 
@@ -107,12 +106,12 @@ header {
     padding-bottom: 10px;
 }
 
-/* FORM -----------------------------------  */
+/* Form --------------------  */
 form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-bottom: 50px;
+  padding-bottom: 70px;
 }
 
 form button:hover,
@@ -121,31 +120,30 @@ form button:focus {
 }
 
 form input {
+  background: #f5f5f5;
   height: 45px;
   padding: 10px;
-  background: #f5f5f5;
   border: none;
   border-bottom: 2px solid #a5a5a5;
 }
 
-/* FORM > TOP SECTION --------------------------- */
+/* From - Top section -------------------- */
 .formTopSection {
   display: flex;
-  margin-bottom: 20px;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .formTopSection label,
 .formBottomSection label {
   font-weight: 700;
-  text-transform: uppercase;
   min-width: 200px;
   max-width: 200px;
+  text-transform: uppercase;
 }
 
 
-/* FORM > TOP SECTION > INPUT LOCATION CONTAINER ---------------------------- */
-
+/* Form - Top Section - Input location container -------------------- */
 .inputLocationContainer {
   position: relative;
   width: 58%;
@@ -159,26 +157,26 @@ form input {
   outline-color: #b20061;
 }
 
-/* FORM > TOP SECTION > INPUT LOCATION CONTAINER > AUTOCOMPLETE ----------------------------------- */
+/* Form - Top section - Input location container - Autocomplete -------------------- */
 .inputLocationAutoComplete {
   position: absolute;
+  width: 100%;
+  max-height: 230px;
+  z-index: 100;
   margin: 0;
   padding: 0;
   list-style: none;
-  width: 100%;
-  z-index: 100;
   border: 1px solid #350482;
   box-shadow: 0 2px 3px rgba(53, 4, 130, 0.4);
   overflow: scroll;
-  max-height: 230px;
 }
 
 .autoCompleteResults button {
-  border: 0;
+  width: 100%;
+  padding: 10px 0 10px 10px;
   background-color:#b20061;
   color: #ffe1f9;
-  padding: 10px 0 10px 10px;
-  width: 100%;
+  border: 0;
   text-align: left;
   transition: background-color 0.3s;
 }
@@ -193,7 +191,7 @@ form input {
   background-color: #350482;
 }
 
-/* FORM > BOTTOM SECTION---------------------------------   */
+/* Form - Bottom section -------------------- */
 .formBottomSection {
   display: flex;
   align-items: center;
@@ -205,58 +203,57 @@ form input {
 }
 
 .formBottomSection p {
-  text-transform: uppercase;
   width: 20%;
+  text-transform: uppercase;
   text-align: right;
 }
 
 .formBottomSection span {
-  text-transform: lowercase;
   display: block;
+  text-transform: lowercase;
 }
 
-/* FORM > BOTTOM SECTION > SELECTED RADIUS CONTAINER -----------------------------------   */
+/* Form - Bottom section - Selected radius container -------------------- */
 .selectedRadiusContainer {
   position: relative;
-  padding: 10px;
   width: 50px;
+  padding: 10px;
   border: 2px solid transparent;
 }
 
 .selectedRadiusContainer label {
   position: absolute;
+  width: 100%;
   bottom: -10px;
   left: -10px;
   text-align: center;
-  width: 100%;
   border: 2px solid transparent;
 }
 
 .selectedRadiusContainer label::after {
   content: '';
+  position: absolute;
+  top: -35px;
+  left: 8px;
   padding: 10px;
   border: 2px solid #b20061;
   border-radius: 50%;
   transition: background-color 0.3s;
-  position: absolute;
-  top: -35px;
-  left: 8px
 }
 
 .selectedRadiusContainer input:checked + label::after {
   background-color: #350482;
 }
 
-/* FORM > BOTTOM SECTION > SUBMIT BUTTON -----------------------------------  */
+/* Form - Bottom section - Submit button -------------------- */
 .formSubmitButton {
   height: 50px;
   width: 50px;
-  border-radius: 50%;
   background-color: #b20061;
   color: #ffe1f9;
-  border: 0;
-  text-transform: uppercase;
   border: 2px solid transparent;
+  border-radius: 50%;
+  text-transform: uppercase;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -265,57 +262,52 @@ form input {
   background-color: #350482;
   border-color: #b20061;
 }
+
+.mapAndCoffeeShopBackground {
+  background-color: #dcdbdb;
+}
+
 .mapAndCoffeeShopContainer {
-    display: flex;
-    justify-content: space-around;
-    background-color: rgb(225, 221, 221);
-    min-height: 600px;
-    padding: 25px;
-    margin-bottom: 50px;
-    border: 2px solid #ffe1f9;
-    border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  min-height: 600px;
+  padding: 70px 0;
 }
 
-
-
-
-/* MAP------------------------------------------- */
+/* Map -------------------- */
 .map {
-    width: 50%;
-    /* background-color: black; */
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden
-}
-
-.map img {
-    object-fit: cover;
-    min-width: 100%;
-    min-height: 100%;
-    /* width: 400px; */
-    /* height: 500px; */
-    border-radius: 10px;
-    border: 2px solid #CACACA;
-}
-
-/* Loading spinner ---------------------------------*/
-/* in the event API map call is delayed */ 
-
-.spinnerContainer {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 50%;
+  margin-right: 10px;
+  overflow: hidden
+}
+
+.map img {
+  object-fit: cover;
+  min-width: 100%;
+  min-height: 100%;
+  border: 4px solid #CACACA;
+  border-radius: 10px;
+}
+
+/* Loading spinner -------------------- */
+/* In the event API map call is delayed */ 
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .loadingSpinner {
+  height: 75px;
+  width: 75px;
   border: 20px solid #ffe1f9;
   border-top: 20px solid #350482;
   border-radius: 50%;
-  height: 75px;
-  width: 75px;
   animation: spin 2s linear infinite; 
 }
 
@@ -324,52 +316,45 @@ form input {
   100% {transform: rotate(360deg);}
 }
 
-/* COFFEE SHOPS -------------------------------------------  */
+/* Coffee shops -------------------- */
 .coffeeShops {
-    width: 45%;
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
-    
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  margin-left: 10px;
 }
+
 .coffeeShops h2 {
-  height: 10%;
-  padding-bottom: 10px;
+  padding: 20px 0;
 }
 
 .coffeeShopsContainer {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  width: 100%;
+  list-style: none;
 }
 
 .coffeeShopButton {
-    width: 100%;
-    margin: 0;
-    height: 80px;
-    background-color: #350482;
-    color: #ffe1f9;
-    text-align: left;
-    padding: 0 15px 0 15px; 
-    border: none;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    transition: filter 0.3s;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  margin: 0;
+  padding: 0 15px; 
+  background-color: #350482;
+  color: #ffe1f9;
+  border: none;
+  border-radius: 10px;
+  text-align: left;
+  transition: filter 0.3s;
 }
 
 .coffeeShops button:hover,
 .coffeeShops button:active,
 .coffeeShops button:focus {
-    /* background-color: rgb(218, 205, 205); */
-    /* color: black; */
-    filter: brightness(120%);
-}
-
-.coffeeShops button:active {
-    /* background-color: rgb(201, 198, 198); */
+  filter: brightness(120%);
 }
 
 .coffeeShopNumber {
@@ -377,43 +362,42 @@ form input {
   margin-right: 10px;
 }
 
-
 .coffeeShopText h3 {
   font-size: 1.6rem;
   margin-bottom: 3px;
 }
 
-/* Transportations and directions ----------------------- */
-.transportationAndDirections {
-    /* margin: 50px 0; */
+/* Transportations and directions -------------------- */
+.directionsToCoffeeShopOl {
+  overflow: auto;
+  max-height: 300px;
 }
 
-.transportation {
-    /* margin-bottom: 25px; */
-}
-
-.transportation ol {
+.transportation + ol {
   list-style-position: inside;
 }
 
-.transportation ol li:not(:last-child) {
-    padding-bottom: 10px;
+.transportationAndDirections ol li:not(:last-child) {
+  padding-bottom: 10px;
 }
 
 .transportationButton {
-  text-transform: uppercase;
-  background-color: #b20061;
   font-weight: 700;
+  background-color: #b20061;
   color: #ffe1f9;
-  border: none;
   padding: 10px;
+  border: none;
   border-radius: 10px;
+  text-transform: uppercase;
   transition: filter 0.3s;
 }
 
 .directionMarkers {
   display: flex;
-  justify-content: space-around;
+}
+
+.directionMarkerContainer:first-of-type {
+  margin-right: 65px;
 }
 
 .directionMarkerContainer img {
@@ -421,56 +405,135 @@ form input {
   height: auto;
 }
 
-.modeOfTransportationInputContainer {
-  margin: 10px 0;
+.directionMarkerContainer p {
+  padding-top: 10px;
 }
 
+.modeOfTransportationInputContainer {
+  margin: 30px 0;
+}
 
+.modeOfTransportationInputContainer label {
+  font-weight: 700;
+  padding-right: 10px;
+}
 
-/* FOOTER -------------------------------------*/
+.modeOfTransportationInputContainer select {
+  padding: 10px;
+  width: 150px;
+}
 
+/* Footer -------------------- */
 footer {
-    color: #fff;
-    background-color: #350482;
-    padding: 25px 0px;
+  color: #fff;
+  background-color: #350482;
+  padding: 25px 0px;
 }
 
 footer p {
-    font-size: clamp(1.4rem, 1.4vw, 1.5rem);
-    text-transform: uppercase;
+  font-size: clamp(1.4rem, 1.4vw, 1.5rem);
+  text-transform: uppercase;
 }
 
 .footerFlex {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .creators {
-    font-weight: bold;
-    width: 60%;
+  width: 60%;
+  font-weight: bold;
 }
 
 .photoCredit {
-    width: 40%;
-    text-align: right;
+  width: 40%;
+  text-align: right;
 }
 
-/* MEDIA QUERIES 500px--------------------------------------*/
+/* Media query 1230px -------------------- */
+@media (max-width: 1230px) {
+  .mapAndCoffeeShopContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .coffeeShops {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .transportationButton { 
+    margin-top: 15px;
+  }
+
+}
+
+
+
+/* Media query 600px -------------------- */
+@media (max-width: 600px) {
+  h1 {
+    width: 272px;
+  }
+
+  .instructionsSection {
+    margin: 50px 0px;
+    padding-bottom: 50px;
+  }
+
+  form {
+    padding-bottom: 50px;
+  }
+
+  .formTopSection,
+  .formBottomSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inputRadius {
+    width: 100%;
+    margin-bottom: 20px; 
+  }
+
+  .inputLocationContainer {
+    width: 100%;
+  }
+
+  .map{
+    width: 100%;
+  }
+
+  .mapAndCoffeeShopContainer {
+    padding: 50px 0;
+  }
+
+  .modeOfTransportationInputContainer select{
+    margin-top: 10px;
+  }
+
+  .directionsToCoffeeShopOl {
+    overflow: initial;
+    max-height: initial;
+  }
+}
+
+/* Media query 500px --------------------*/
 @media (max-width: 500px) {
-    .footerFlex {
-        flex-direction: column;
-        align-items: center;
-    }
+  .footerFlex {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .creators {
-        padding-bottom: 15px;
-    }
+  .creators {
+    padding-bottom: 15px;
+  }
 
-    .creators,
-    .photoCredit {
-        width: 100%;
-        text-align: center;
-    } 
+  .creators,
+  .photoCredit {
+    width: 100%;
+    text-align: center;
+  } 
 }
 
 

@@ -15,6 +15,7 @@ const Form = (props) => {
     <>
       <form action='submit'>
         <div className='formTopSection'>
+
           <label htmlFor='inputLocation'>Find Library</label>
           <div className='inputLocationContainer'>
             <input
@@ -26,6 +27,8 @@ const Form = (props) => {
               placeholder=''
               autoComplete='off'
             />
+
+            {/* displaying autocomplete results / event handler on click */}
             {
               showSuggestions &&
               <ul className='inputLocationAutoComplete'>
@@ -64,11 +67,11 @@ const Form = (props) => {
             autoComplete='off'
             required
           />
-          <div>
-            <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>Go
-            </button>
-          </div>
+
+        <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>Go</button>
+
         </div>
+
       </form>
     </>
   );
