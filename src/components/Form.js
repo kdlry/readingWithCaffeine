@@ -51,8 +51,7 @@ const Form = (props) => {
         </div>
 
         <div className='formBottomSection'>
-          <label htmlFor='inputRadius'>Maximum distance (1-20km)</label>
-
+          <label htmlFor='inputRadius'>Maximum distance <span>(1 - 20km)</span></label>
           <input
             type='number'
             id='inputRadius'
@@ -65,14 +64,11 @@ const Form = (props) => {
             autoComplete='off'
             required
           />
-
           <div>
             <button className='formSubmitButton' type='submit' onClick={handleFormSubmit}>Go
-          </button>
+            </button>
           </div>
-
         </div>
-
       </form>
     </>
   );

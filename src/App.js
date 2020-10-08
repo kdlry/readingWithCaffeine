@@ -97,7 +97,7 @@ class App extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.libraryInput);
+    // console.log(this.state.libraryInput);
     this.state.libraryInput.length < 3 ? Swal.fire({
       title: 'No results',
       text: 'Library name must be greater than 3 characters.',
@@ -203,7 +203,7 @@ class App extends Component {
 
     const libraryMarker = `${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}|marker-md-350482||`;
 
-    const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${libraryMarker}${joinedCoffeeShopCoords}&size=600,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
+    const mapWithoutRoute = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&scalebar=true|bottom&locations=${libraryMarker}${joinedCoffeeShopCoords}&size=500,600&type=light&shape=radius:${radiusDistance}km|${this.state.selectedLibrary.latitude},${this.state.selectedLibrary.longitude}`;
 
     this.setState({
       displayedMap: mapWithoutRoute,
@@ -228,7 +228,9 @@ class App extends Component {
 
 
   handleCoffeeShopSelected = (event) => {
-    const userSelectedCoffeeShop = event.target.value;
+    // to prevent event bubbling down to the h3/p contained in the button
+    // use event.currentTarget to target the button where the onClick event is attached to
+    const userSelectedCoffeeShop = event.currentTarget.value;
 
     const finalCoffeeShop = this.state.coffeeShops.filter(
       (item) => item.id === userSelectedCoffeeShop
@@ -291,7 +293,7 @@ class App extends Component {
       // update state with the directionsToCoffeeShop, and the directionsSessionID
       this.setState({ directionsToCoffeeShop, directionsSessionID }, () => {
         // once the state has been changed, update the mapWithRoute img src to display the visual directions using the sessionID of the directions api call
-        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=600,600&type=light&traffic=flow|cons|inc`;
+        const mapWithRoute = `https://www.mapquestapi.com/staticmap/v5/map?session=${this.state.directionsSessionID}&key=${apiKey}&scalebar=true|bottom&size=500,600&type=light&traffic=flow|cons|inc`;
         this.setState({ displayedMap: mapWithRoute });
       })
     })

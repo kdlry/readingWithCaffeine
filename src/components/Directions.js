@@ -14,20 +14,25 @@ const Directions = (props) => {
             {selectedCoffeeShop !== '' && (
                 <>
                     <div className='transportation'>
-                        {/* <div className="directionsMarkerImageContainer">
-                            <p>Start</p>
-                            <img src="https://assets.mapquestapi.com/icon/v2/marker-start.png" />
+                        <div className="directionMarkers">
+                            <div className="directionMarkerContainer">
+                                <img src="https://assets.mapquestapi.com/icon/v2/marker-start.png" />
+                                <p>Start</p>
+                            </div>
+                            <div className="directionMarkerContainer">
+                                <img src="https://assets.mapquestapi.com/icon/v2/marker-end.png" />
+                                <p>End</p>
+                            </div>
                         </div>
-                        <div className="directionsMarkerImageContainer">
-                            <p>End</p>
-                            <img src="https://assets.mapquestapi.com/icon/v2/marker-end.png" />
-                        </div> */}
-                        <label htmlFor='modeOfTransportation'>Choose a mode of transportation:</label>
-                        <select id='modeOfTransportation' value={modeOfTransportation} onChange={handleTransportationChange}>
-                            <option value='fastest'>Drive</option>
-                            <option value='pedestrian'>Walk</option>
-                            <option value='bicycle'>Bike</option>
-                        </select>
+                       
+                       <div className="modeOfTransportationInputContainer">
+                            <label htmlFor='modeOfTransportation'>Choose a mode of transportation:</label>
+                            <select id='modeOfTransportation' value={modeOfTransportation} onChange={handleTransportationChange}>
+                                <option value='fastest'>Drive</option>
+                                <option value='pedestrian'>Walk</option>
+                                <option value='bicycle'>Bike</option>
+                            </select>
+                       </div>
                     </div>
 
                     <ol>
