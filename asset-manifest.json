@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/readingWithCaffeine/static/css/main.a8ad6a3c.chunk.css",
+    "main.css": "/readingWithCaffeine/static/css/main.ebeb6dd4.chunk.css",
     "main.js": "/readingWithCaffeine/static/js/main.d313af7f.chunk.js",
     "main.js.map": "/readingWithCaffeine/static/js/main.d313af7f.chunk.js.map",
     "runtime-main.js": "/readingWithCaffeine/static/js/runtime-main.00093b2b.js",
@@ -8,16 +8,16 @@
     "static/js/2.8ad76435.chunk.js": "/readingWithCaffeine/static/js/2.8ad76435.chunk.js",
     "static/js/2.8ad76435.chunk.js.map": "/readingWithCaffeine/static/js/2.8ad76435.chunk.js.map",
     "index.html": "/readingWithCaffeine/index.html",
-    "precache-manifest.b91983f517bb600421b3f9e2af14cce6.js": "/readingWithCaffeine/precache-manifest.b91983f517bb600421b3f9e2af14cce6.js",
+    "precache-manifest.e2d7b629efc4ae26e911267f7b3fb9af.js": "/readingWithCaffeine/precache-manifest.e2d7b629efc4ae26e911267f7b3fb9af.js",
     "service-worker.js": "/readingWithCaffeine/service-worker.js",
-    "static/css/main.a8ad6a3c.chunk.css.map": "/readingWithCaffeine/static/css/main.a8ad6a3c.chunk.css.map",
+    "static/css/main.ebeb6dd4.chunk.css.map": "/readingWithCaffeine/static/css/main.ebeb6dd4.chunk.css.map",
     "static/js/2.8ad76435.chunk.js.LICENSE.txt": "/readingWithCaffeine/static/js/2.8ad76435.chunk.js.LICENSE.txt",
     "static/media/App.css": "/readingWithCaffeine/static/media/thomas-park-unsplash.ff474788.png"
   },
   "entrypoints": [
     "static/js/runtime-main.00093b2b.js",
     "static/js/2.8ad76435.chunk.js",
-    "static/css/main.a8ad6a3c.chunk.css",
+    "static/css/main.ebeb6dd4.chunk.css",
     "static/js/main.d313af7f.chunk.js"
   ]
 }

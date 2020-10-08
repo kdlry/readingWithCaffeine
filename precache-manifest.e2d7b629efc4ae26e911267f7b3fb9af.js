@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9141856b82409cb7491102e3113c0b66",
+    "revision": "7f6e1d6e4057cd594e621aaff559b155",
     "url": "/readingWithCaffeine/index.html"
   },
   {
-    "revision": "3fbc40d72da72379d38b",
-    "url": "/readingWithCaffeine/static/css/main.a8ad6a3c.chunk.css"
+    "revision": "d241e6095cd318c90e37",
+    "url": "/readingWithCaffeine/static/css/main.ebeb6dd4.chunk.css"
   },
   {
     "revision": "4b5765a832777ad0a241",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/readingWithCaffeine/static/js/2.8ad76435.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3fbc40d72da72379d38b",
+    "revision": "d241e6095cd318c90e37",
     "url": "/readingWithCaffeine/static/js/main.d313af7f.chunk.js"
   },
   {
