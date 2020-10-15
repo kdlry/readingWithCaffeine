@@ -1,6 +1,6 @@
 
 ## Reading With Caffeine
-Agency-style site using React, HTML5, CSS3, powered by MapQuest's API.\
+Agency-style site using React, HTML5, CSS3, and powered by MapQuest's API.\
 Built by: <a href="https://github.com/afacey">Andre Facey</a>, <a href="https://github.com/connietee22">Connie Tsang</a>, <a href="https://github.com/kdlry">Kristen Delorey</a>, <a href="https://github.com/raphaelroques">Raphael Roques</a> at Juno College
 
 <a href="https://conkrisdreraph.github.io/readingWithCaffeine">Live Link</a>
