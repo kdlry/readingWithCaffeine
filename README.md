@@ -3,7 +3,7 @@
 
 Built: October 8, 2020\
 Agency-style responsive site using React, HTML5, CSS3, and powered by MapQuest's API.\
-Created by: <a href="https://github.com/afacey">Andre Facey</a>, <a href="https://github.com/connietee22">Connie Tsang</a>, <a href="https://github.com/kdlry">Kristen Delorey</a>, <a href="https://github.com/raphaelroques">Raphael Roques</a> at Juno College
+Created by: <a href="https://github.com/afacey">Andre Facey</a>, <a href="https://github.com/connietee22">Connie Tsang</a>, <a href="https://github.com/kdlry">Kristen Delorey</a>, <a href="https://github.com/raphaelroques">Raphael Roques</a> at Juno College of Technology
 
 <a href="https://kdlry.github.io/readingWithCaffeine">Live Link</a>
 
